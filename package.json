@@ -1,0 +1,23 @@
+{
+  "name": "ibpm-rest",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "https://github.com/sammich",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --silent=false --colors --verbose --watch"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "jest": "^20.0.4",
+    "markdown-toc": "^1.1.0",
+    "query-string": "^4.3.4",
+    "request": "^2.81.0"
+  },
+  "jest": {
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "js"
+    ]
+  }
+}
