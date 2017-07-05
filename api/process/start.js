@@ -15,22 +15,19 @@ module.exports = exec
  * @param {string} [options.processAppId] - The process app ID begins with `2066.xxx`. You can find the process app ID by selecting Other > Retrieve Process Applications.
  * @param {object} [options.params] - An object containing inputs to start the process
  * @param {string} [options.mode] - A string indicating whether the process should be started in run or debug mode
- * @param {object} [options.parts] - leave undefined for all items
- * @param {boolean} [options.parts.diagram]
- * @param {boolean} [options.parts.header]
- * @param {boolean} [options.parts.data]
- * @param {boolean} [options.parts.executionTree]
+ * @param {object} [parts] - leave undefined for all items
+ * @param {boolean} [parts.diagram]
+ * @param {boolean} [parts.header]
+ * @param {boolean} [parts.data]
+ * @param {boolean} [parts.executionTree]
  * @returns {Promise<ProcessInstanceState>}
  */
-async function exec(options) {
+async function exec(options, parts) {
     if (!options) throw new Error('options argument must be defined')
     
-    let result,
-        parts = joinParts(options.parts)
-    
-    result = await post(path, {
+    let result = await post(path, {
         params: {
-            parts
+            parts: joinParts(parts)
         },
         data: {
             bpdId: options.bpdId,

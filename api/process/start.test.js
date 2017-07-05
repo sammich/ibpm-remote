@@ -3,7 +3,7 @@ jest.mock('request')
 const request = require('request'),
     startProcess = require('./start')
 
-describe('process.currentState', () => {
+describe('process.start', () => {
     it('is a function', () => {
         expect(startProcess).toBeInstanceOf(Function)
     })

@@ -1,19 +1,27 @@
-const currentState = require('./currentState')
+jest.mock('request')
+
+const request = require('request'),
+startProcess = require('./currentState')
 
 describe('process.currentState', () => {
-    it('does nothing', () => {
-        expect(1).toBe(1)
+    it('is a function', () => {
+        expect(startProcess).toBeInstanceOf(Function)
+    })
+    
+    it('returns a promise', () => {
+        expect(startProcess({})).toBeInstanceOf(Promise)
+    })
+    
+    it('returns body data inside data property', async () => {
+        request.__setRequestResponses(null, { statusCode: 200 }, { data: { foo: 'bar' }, data1: 'foo' })
+        await expect(startProcess({})).resolves.toEqual({ foo: 'bar' })
+    })
+    
+    it('rejects after internal error', async () => {
+        request.__setRequestResponses(new Error('error'), {}, {})
+        await expect(startProcess({})).rejects.toBeDefined()
+        
+        request.__setRequestResponses(null, { statusCode: 400 }, 'err400')
+        await expect(startProcess({})).rejects.toBeDefined()
     })
 })
-/*
-
-;(async () => {
-    try {
-        let res = await currentState(404)
-        
-        console.log('Current State of instance', res)
-    } catch (err) {
-        console.error('Error getting current process', err)
-    }
-})()
-*/
