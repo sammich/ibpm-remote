@@ -1,5 +1,3 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-
 const fs = require('fs'),
     toc = require('markdown-toc'),
     bpmRestCaller = require('../utils/rest').get
@@ -22,8 +20,8 @@ async function generate(apiDocs) {
     const pre = '# ' + apiDocs.name + '\n' + apiDocs.description + '\n\n'
     const systems = await bpmRestCaller('systems')
     
-    fs.writeFileSync(`./generated/bpm-api-docs-${systems.data.systems[0].version}.json`, JSON.stringify(apiDocs, null, 2))
-    fs.writeFileSync(`./generated/bpm-api-docs-${systems.data.systems[0].version}.md`, pre + toc(md).content + '\n\n' + md)
+    fs.writeFileSync(`../generated/bpm-api-docs-${systems.data.systems[0].version}.json`, JSON.stringify(apiDocs, null, 2))
+    fs.writeFileSync(`../generated/bpm-api-docs-${systems.data.systems[0].version}.md`, pre + toc(md).content + '\n\n' + md)
 }
 
 //
