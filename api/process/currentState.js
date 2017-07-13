@@ -1,8 +1,6 @@
 const post = require('../../utils/rest').get,
     joinParts = require('../../utils/join-keys')
 
-const path = '/process/' // + instanceId
-
 module.exports = exec
 
 /**
@@ -22,7 +20,11 @@ module.exports = exec
  * @returns {Promise<*>}
  */
 async function exec(instanceId, options = {}, parts) {
-    let result = await post(path + '/' + instanceId, {
+    if (!instanceId) {
+        throw new Error('Instance ID must be provided')
+    }
+    
+    let result = await post(`/process/${instanceId}`, {
         params: {
             parts: joinParts(parts)
         },

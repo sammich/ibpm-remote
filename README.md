@@ -1,0 +1,12 @@
+# ibpm-rest
+
+Words
+
+## Envs
+
+```
+BPM_SERVER_HOST=
+BPM_SERVER_APP_PORT=
+BPM_SERVER_PROTOCOL=
+BPM_REST_CONTEXT=
+```

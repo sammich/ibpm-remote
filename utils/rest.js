@@ -1,4 +1,3 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 require('dotenv').config()
 
 const request = require('request'),
@@ -100,16 +99,16 @@ function call(path, options = {}) {
                 return reject(err)
             }
             
+            //console.log('status', response && response.statusCode)
+            //console.log('body', body)
+            
             if (response && response.statusCode) {
-                if (response.statusCode >= 400 && response.statusCode < 500) {
+                if (response.statusCode >= 400 && response.statusCode < 600) {
     
                     // IBM BPM responds with a JSON error structure
                     return reject(parseJson(response, body))
                 }
             }
-            
-            //console.log('status', response && response.statusCode)
-            //console.log('body', body)
             
             resolve(parseJson(response, body))
         })

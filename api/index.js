@@ -17,7 +17,7 @@ Process API
 		GET          Retrieve Model                                               /processModel/<bpdId>?
 		GET          External Activity Model                                      /externalactivity/<externalActivityId>/model
 done	POST         Start Process                                                /process?action=start
-		GET          Current State                                                /process/<instanceId>
+done	GET          Current State                                                /process/<instanceId>
 		PUT          Evaluate JavaScript                                          /process/<instanceId>?action=js
 		PUT          Update Due Date                                              /process/<instanceId>?action=update
 		PUT          Suspend Process                                              /process/<instanceId>?action=suspend
@@ -60,7 +60,7 @@ done	POST         Start Process                                                /
 
 Service API
 		GET          Retrieve Model                                               /serviceModel/<serviceId>
-		POST         Start Service                                                /service/<serviceId>?action=start
+done	POST         Start Service                                                /service/<serviceId>?action=start
 		PUT          Resume Service                                               /service/<instanceId>?action=<action>
 		PUT          Evaluate JavaScript                                          /service/<instanceId>?action=js
 		GET          Get Data                                                     /service/<instanceId>?action=getData

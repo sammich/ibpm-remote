@@ -9,23 +9,23 @@ describe('process.start', () => {
     })
     
     it('returns a promise', () => {
-        expect(startProcess({})).toBeInstanceOf(Promise)
+        expect(startProcess(1)).toBeInstanceOf(Promise)
     })
     
     it('returns body data inside data property', async () => {
         request.__setRequestResponses(null, { statusCode: 200 }, { data: { foo: 'bar' }, data1: 'foo' })
-        await expect(startProcess({})).resolves.toEqual({ foo: 'bar' })
+        await expect(startProcess(1)).resolves.toEqual({ foo: 'bar' })
     })
     
-    it('rejects with no options supplied', async () => {
+    it('rejects if no BPD ID given', async () => {
         await expect(startProcess()).rejects.toBeDefined()
     })
     
-    it('rejects after internal error', async () => {
+    it('rejects after integration error', async () => {
         request.__setRequestResponses(new Error('error'), {}, {})
-        await expect(startProcess({})).rejects.toBeDefined()
+        await expect(startProcess(1)).rejects.toBeDefined()
     
         request.__setRequestResponses(null, { statusCode: 400 }, 'err400')
-        await expect(startProcess({})).rejects.toBeDefined()
+        await expect(startProcess(1)).rejects.toBeDefined()
     })
 })

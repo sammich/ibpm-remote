@@ -7,6 +7,34 @@
  * @property {object[]} tasks
  * @property {object} variables
  */
+
+
+// states
+class ProcessInstance {
+    constructor(instanceIdOrRestData) {
+        
+        // instanceId can't be zero, anyway
+        if (!instanceIdOrRestData) {
+            throw new Error('No instanceId or data provided')
+        }
+        
+        if (typeof instanceId === 'number') {
+            this.instanceId = instanceIdOrRestData
+        } else if (typeof instanceId === 'object') {
+            this._rawData = instanceIdOrRestData
+        } else {
+            const err = new Error('Unknown input provided to constructor')
+            err.data = instanceIdOrRestData
+        }
+    }
+    
+    __processRestData() {
+        this._rawData
+    }
+    
+    isValid // exists on the server in any state
+    reload // pull data from server
+}
 /*
 
 {
