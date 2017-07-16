@@ -23,14 +23,21 @@ function isBpmError(err) {
     
     if (err.status === 'error' && err.Data) {
         const data = err.Data
-        if (data.programmersDetails) return data.programmersDetails
         if (data.errorMessage) return data.errorMessage
     }
     
     return false
 }
 
+/**
+ * Strips metadata from BPM objects and collapses TWList types into a normal array.
+ *
+ * @param {object} obj - the result of calling a BPM endpoint
+ * @returns {*} - the original object with all @metadata property removed
+ */
 function cleanUpBpmObject(obj) {
+    if (!obj) return obj
+    
     if (typeof obj === 'object') {
         if ('@metadata' in obj && 'items' in obj) {
             return obj.items.map(item => {

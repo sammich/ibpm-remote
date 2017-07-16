@@ -9,7 +9,7 @@ describe('evaluator', () => {
     })
     
     it('returns a promise', () => {
-        expect(evaluator(1)).toBeInstanceOf(Promise)
+        expect(evaluator(() => {})).toBeInstanceOf(Promise)
     })
     
     it('returns body data inside data property', async () => {

@@ -9,7 +9,12 @@ describe('executor', () => {
     })
     
     it('returns a promise', () => {
-        expect(executor(1)).toBeInstanceOf(Promise)
+        request.__setRequestResponses(null,
+            { statusCode: 200 },
+            { data: { data: { jsonResult: JSON.stringify({ a: 1 }) } } }
+        )
+        
+        expect(executor({ name: '1'}, {})).toBeInstanceOf(Promise)
     })
     
     it('returns body data inside data property', async () => {
@@ -19,6 +24,24 @@ describe('executor', () => {
         )
         
         await expect(executor({ name: '1'})).resolves.toEqual({ a: 1 })
+    })
+    
+    it(`rejects if error is returned from executed code`, async () => {
+        request.__setRequestResponses(null,
+            { statusCode: 200 },
+            { data: { data: { errStr: ':sadface:' } } }
+        )
+    
+        await expect(executor({ name: '1'})).rejects.toEqual(':sadface:')
+    })
+    
+    it(`rejects if there is malformed JSON`, async () => {
+        request.__setRequestResponses(null,
+        { statusCode: 200 },
+        { data: { data: { jsonResult: ':sadface:' } } }
+        )
+        
+        await expect(executor({ name: '1' })).rejects.toContain('Error attempting to parse JSON')
     })
     
     it('rejects if no service selector given', async () => {
@@ -31,9 +54,9 @@ describe('executor', () => {
     
     it('rejects after integration error', async () => {
         request.__setRequestResponses(new Error('error'), {}, {})
-        await expect(executor({ name: '1'})).rejects.toBeDefined()
+        await expect(executor({ name: '1' })).rejects.toBeDefined()
         
         request.__setRequestResponses(null, { statusCode: 400 }, 'err400')
-        await expect(executor({ name: '1'})).rejects.toBeDefined()
+        await expect(executor({ name: '1' })).rejects.toBeDefined()
     })
 })

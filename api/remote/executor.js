@@ -21,18 +21,24 @@ async function exec(serviceSelector, inputs) {
         throw new Error('Service Selector name must be provided')
     }
     
-    const results = await start(EXECUTOR_SERVICE_ID, {
-        service: serviceSelector,
-        jsonInput: inputs && JSON.stringify(inputs)
-    })
+    let results
+    
+    try {
+        results = await start(EXECUTOR_SERVICE_ID, {
+            service: serviceSelector,
+            jsonInput: inputs && JSON.stringify(inputs)
+        })
+    } catch (err) {
+        return Promise.reject(isBpmError(err) || err)
+    }
     
     if (results.errStr) {
-        throw new Error('Service Error: ' + results.errStr)
+        return Promise.reject(results.errStr)
     }
     
     try {
         return JSON.parse(results.jsonResult)
     } catch (err) {
-        console.error('Error parsing result JSON', err);
+        return Promise.reject('Error attempting to parse JSON result - ' + err.toString())
     }
 }

@@ -2,6 +2,10 @@ jest.mock('request')
 
 const request = require('request'),
     startProcess = require('./start')
+    
+/*
+    Note: we do not test that the request call actually contains the correct parameters in the REST call
+ */
 
 describe('process.start', () => {
     it('is a function', () => {
@@ -9,7 +13,7 @@ describe('process.start', () => {
     })
     
     it('returns a promise', () => {
-        expect(startProcess(1)).toBeInstanceOf(Promise)
+        expect(startProcess(1, { params: 1 })).toBeInstanceOf(Promise)
     })
     
     it('returns body data inside data property', async () => {
