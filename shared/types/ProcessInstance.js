@@ -9,8 +9,7 @@
  */
 
 
-// states
-class ProcessInstance {
+export default class ProcessInstance {
     constructor(instanceIdOrRestData) {
         
         // instanceId can't be zero, anyway

@@ -20,14 +20,14 @@ module.exports = exec
  * @param {boolean} [parts.header]
  * @param {boolean} [parts.data]
  * @param {boolean} [parts.executionTree]
- * @returns {Promise<*>}
+ * @returns {Promise<Object>}
  */
 async function exec(bpdId, options = {}, parts) {
     if (!bpdId) {
         throw new Error('BPD ID must be provided')
     }
     
-    let result = await post(path, {
+    const result = await post(path, {
         params: {
             parts: joinParts(parts)
         },

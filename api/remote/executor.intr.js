@@ -3,7 +3,7 @@ jest.unmock('request')
 const executor = require('./executor')
 
 async function adder(a, b) {
-    const result = await executor('1.6daf7ba7-34cf-4405-bd8c-9a8986eac8d9', {
+    const result = await executor({
         name: 'Add Two Numbers',
         appAcronym: 'SCSB'
     }, {
@@ -14,7 +14,7 @@ async function adder(a, b) {
     return result.total
 }
 
-describe('exectutor', () => {
+describe('executor', () => {
     it('it works', async () => {
         let result = await adder(1, 2)
         
@@ -34,5 +34,14 @@ describe('exectutor', () => {
         
         expect(result).toBeDefined()
         expect(result).toBe(-1)
+    })
+    
+    it(`rejects on error output`, async () => {
+        await expect(executor({
+            service: {
+                name: 'Test Service Error',
+                appAcronym: 'RMTE'
+            }
+        })).rejects.toBeDefined()
     })
 })

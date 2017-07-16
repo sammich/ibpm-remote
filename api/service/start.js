@@ -25,7 +25,7 @@ async function exec(serviceId, inputs, options = {}, parts) {
         throw new Error('Service ID must be provided')
     }
     
-    let result = await post(`/service/${serviceId}?action=start`, {
+    const result = await post(`/service/${serviceId}?action=start`, {
         params: {
             parts: joinParts(parts)
         },

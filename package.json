@@ -12,8 +12,7 @@
     "jest": "^20.0.4",
     "markdown-toc": "^1.1.0",
     "query-string": "^4.3.4",
-    "request": "^2.81.0",
-    "soap": "^0.19.2"
+    "request": "^2.81.0"
   },
   "jest": {
     "testRegex": "(/__tests__/.*|\\.(test))\\.js$"

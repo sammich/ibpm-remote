@@ -6,9 +6,11 @@
  *
  */
 
-module.exports = {}
 
 module.exports.process = require('./process')
+module.exports.service = require('./service')
+module.exports.remote = require('./remote')
+
 
 /*
 Status

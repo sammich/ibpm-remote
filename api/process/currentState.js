@@ -24,7 +24,7 @@ async function exec(instanceId, options = {}, parts) {
         throw new Error('Instance ID must be provided')
     }
     
-    let result = await post(`/process/${instanceId}`, {
+    const result = await post(`/process/${instanceId}`, {
         params: {
             parts: joinParts(parts)
         },

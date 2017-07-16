@@ -1,3 +1,2 @@
-module.exports = {
-    services: require('./utils')
-}
+module.exports.api = require('./api')
+module.exports.utils = require('./utils')
