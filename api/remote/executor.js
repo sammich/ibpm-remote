@@ -1,4 +1,5 @@
-const start = require('../service/start')
+const start = require('../service/start'),
+    { isBpmError } = require('../../utils/bpm')
 
 module.exports = exec
 

@@ -7,6 +7,8 @@ const host = process.env.BPM_SERVER_HOST || 'localhost',
     port = process.env.BPM_SERVER_APP_PORT || '',
     protocol = process.env.BPM_SERVER_PROTOCOL || 'https',
     rest = process.env.BPM_REST_CONTEXT || '/rest/bpm/wle/v1',
+
+    /* istanbul ignore next */
     restUrl = protocol + '://' + host + (port ? ':' + port : '') + rest
     
 let apiUser = process.env.BPM_ADMIN_USER || 'admin',
@@ -76,8 +78,9 @@ function del(path, options = {}) {
  * @param {object} [options.data] - body data
  * @returns {Promise}
  */
+/* istanbul ignore next */
 function call(path, options = {}) {
-    path = (path[0] !== '/') ? path = '/' + path : path
+    path = (path[0] !== '/') ? '/' + path : path
     
     const method = options.method.toLowerCase() || 'get',
         username = options.username || apiUser,
@@ -118,6 +121,7 @@ function call(path, options = {}) {
 function parseJson(response, body) {
     if (!response || !response.headers) return body
     
+    /* istanbul ignore next */
     if (response.headers['content-type'] === 'application/json') {
         try {
             return JSON.parse(body)

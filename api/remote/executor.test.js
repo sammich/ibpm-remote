@@ -1,7 +1,8 @@
 jest.mock('request')
 
 const request = require('request'),
-executor = require('./executor')
+    executor = require('./executor'),
+    sampleBpmError = require('../../shared/tests/bpm-error.sample')
 
 describe('executor', () => {
     it('is a function', () => {
@@ -58,5 +59,13 @@ describe('executor', () => {
         
         request.__setRequestResponses(null, { statusCode: 400 }, 'err400')
         await expect(executor({ name: '1' })).rejects.toBeDefined()
+    
+        request.__setRequestResponses(null, {
+            statusCode: 400,
+            headers: {
+                'content-type': 'application/json'
+            }
+        }, JSON.stringify(sampleBpmError))
+        await expect(executor({ name: '1' })).rejects.toEqual(sampleBpmError.Data.errorMessage)
     })
 })

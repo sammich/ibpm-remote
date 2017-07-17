@@ -85,4 +85,21 @@ describe('rest client', () => {
             })
         })
     })
+    
+    it('allows you to set a different user and password for API calls', () => {
+        expect(restClient.setUser(1,2)).toBeUndefined()
+    })
+    
+    it('allows you to restore the original user and password for API calls', () => {
+        expect(restClient.restoreUser()).toBeUndefined()
+    })
+    
+    it('json body parser works', () => {
+        expect(restClient.__parseJson({
+            statusCode: 400,
+            headers: {
+                'content-type': 'application/json'
+            }
+        }, JSON.stringify({ foo: 'bar' }))).toEqual({ foo: 'bar' })
+    })
 })

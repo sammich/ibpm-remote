@@ -5,7 +5,7 @@
   "author": "https://github.com/sammich",
   "license": "MIT",
   "scripts": {
-    "test": "jest --silent=false --colors --verbose --watch"
+    "test": "node --inspect node_modules/.bin/jest --silent=false --colors --verbose --watch"
   },
   "dependencies": {
     "dotenv": "^4.0.0",
