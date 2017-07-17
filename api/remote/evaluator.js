@@ -28,7 +28,7 @@ async function exec(evalFunc) {
         return Promise.reject(isBpmError(err) || err)
     }
     
-    results = results.retVal
+    results = results && results.retVal
     
     return cleanUpBpmObject(results)
 }
