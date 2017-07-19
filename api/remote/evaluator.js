@@ -4,7 +4,7 @@ const start = require('../service/start')
 
 module.exports = exec
 
-const EVALUATOR_SERVICE_ID = '1.234cfbc6-4755-4aff-905d-dada28c02a76'
+const EVALUATOR_SERVICE_ID = process.env.EVALUATOR_SERVICE_ID || '1.234cfbc6-4755-4aff-905d-dada28c02a76'
 
 /**
  * Use the 'Remote' Process Application's API to execute a service and return it's output.

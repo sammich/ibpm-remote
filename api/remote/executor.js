@@ -3,7 +3,7 @@ const start = require('../service/start'),
 
 module.exports = exec
 
-const EXECUTOR_SERVICE_ID = '1.6daf7ba7-34cf-4405-bd8c-9a8986eac8d9'
+const EXECUTOR_SERVICE_ID = process.env.EXECUTOR_SERVICE_ID || '1.6daf7ba7-34cf-4405-bd8c-9a8986eac8d9'
 
 /**
  * Use the 'Remote' Process Application's API to execute a service and return it's output.
