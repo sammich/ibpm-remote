@@ -1,2 +1,5 @@
-module.exports.api = require('./api')
-module.exports.utils = require('./utils')
+const exp = {}
+exp.api = require('./api')
+exp.utils = require('./utils')
+
+module.exports = exp
