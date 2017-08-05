@@ -6,8 +6,9 @@ to make testing BPM services a far less cumbersome.
 
 ## Warning
 
-The provided Process Application is by definition - *do not deploy the provided Process Application any higher*
-than is needed to do your testing.
+*Do not deploy the provided Process Application any higher than is needed to do your testing*.
+
+This exposes some APIs which are impossibly dangerous in the wrong hands.
 
 
 ## What you need
