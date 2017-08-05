@@ -5,6 +5,15 @@ module.exports = exec
 
 const EXECUTOR_SERVICE_ID = process.env.EXECUTOR_SERVICE_ID || '1.6daf7ba7-34cf-4405-bd8c-9a8986eac8d9'
 
+const dateFormat = /^\d{4}-\d{2}-\d{2}(T|\ )?\d{2}:\d{2}:\d{2}(.\d{3})?Z$/
+function dateRestore(key, value) {
+    if (typeof value === "string" && dateFormat.test(value)) {
+        return new Date(value);
+    }
+    
+    return value;
+}
+
 /**
  * Use the 'Remote' Process Application's API to execute a service and return it's output.
  *
@@ -38,7 +47,7 @@ async function exec(serviceSelector, inputs) {
     }
     
     try {
-        return JSON.parse(results.jsonResult)
+        return JSON.parse(results.jsonResult, dateRestore)
     } catch (err) {
         return Promise.reject('Error attempting to parse JSON result - ' + err.toString())
     }

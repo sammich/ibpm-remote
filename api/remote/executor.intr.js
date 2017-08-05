@@ -14,6 +14,42 @@ async function adder(a, b) {
     return result.total
 }
 
+async function complexInputTest() {
+    return await executor({
+        name: 'Test Executor Target',
+        appAcronym: 'RMTE'
+    }, {
+        nvp: {
+            type: 'NameValuePair',
+            data: [{
+                name: '1',
+                value: '2'
+            }, {
+                name: '3',
+                value: '4'
+            }]
+        },
+        str: 'str',
+        date: new Date(2017, 2, 2, 2, 2, 2, 222),
+        someInts: {
+            type: 'Integer',
+            data: [1,2,3]
+        },
+        theComplex: {
+            type: 'TestParentComplex',
+            data: {
+                deeper: [{
+                    nvp: {
+                        name: '5',
+                        value: '6'
+                    },
+                    d: new Date(2017, 2, 2, 2, 2, 2, 222)
+                }]
+            }
+        }
+    })
+}
+
 describe('executor', () => {
     it('it works', async () => {
         let result = await adder(1, 2)
@@ -35,6 +71,34 @@ describe('executor', () => {
         expect(result).toBeDefined()
         expect(result).toBe(-1)
     })
+    
+    it(`works`, async () => {
+        const result = await complexInputTest()
+        
+        // restores JSON date strings to dates
+        expect(result.date.getTime()).toBe(new Date(2017, 2, 2, 2, 2, 2, 222).getTime())
+        expect(result).toEqual({
+            nvp: [{
+                name: '1',
+                value: '2'
+            }, {
+                name: '3',
+                value: '4'
+            }],
+            str: 'str',
+            date: new Date(2017, 2, 2, 2, 2, 2, 222),
+            someInts: [1,2,3],
+            theComplex: {
+                deeper: [{
+                    nvp: {
+                        name: '5',
+                        value: '6'
+                    },
+                    d: new Date(2017, 2, 2, 2, 2, 2, 222)
+                }]
+            }
+        })
+    });
     
     it(`rejects on error output`, async () => {
         await expect(executor({

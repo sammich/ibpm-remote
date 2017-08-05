@@ -1,5 +1,5 @@
 {
-  "name": "ibpm-rest",
+  "name": "ibpm-remote",
   "version": "0.5.0",
   "main": "index.js",
   "author": "https://github.com/sammich",
