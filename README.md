@@ -13,7 +13,8 @@ This exposes some APIs which are impossibly dangerous in the wrong hands.
 
 ## What you need
 
-An IBM BPM environment.
+- Node.js 8
+- An IBM BPM environment (I'm
 
 This package was built and tested against `8.5.7.201706` but there is no reason why it shouldn't work for versions
 going as far back as `8.0`.
@@ -133,3 +134,32 @@ BPM_SERVER_PROTOCOL=
 # default /rest/bpm/wle/v1
 BPM_REST_CONTEXT=
 ```
+
+## TODOs
+
+- As you may have noticed, there are other undocumented folders inside `./api`. These are the beginnings of writing
+  wrappers for BPM APIs. The aim is to write wrappers as I use them/have time.
+- (stretch) To write semi-stateful classes for Process/Task to make it far easier to work with the APIs.
+  For example:
+
+        const p1 = new Process('My Process')
+        await p1.start({ input1: 'Sam' })
+        await pause(1000)
+        expect(p1.tasks.length).toBe(1)
+        expect(p1.tasks[0].name).toBe('Say Hi')
+        p1.tasks[0].complete({ signUpForNewsletter: true })
+        await pause(1000)
+        expect(p1.openTasks().length).toBe(1)
+        expect(p1.activeTimers().length).toBe(1)
+        p1.fireTimer(p1.activeTimers()[0])
+        expect(p1.openTasks()[0].name).toBe('Signup Expired')
+
+  Names of methods are just illustrative for now.
+
+
+## Contributing
+
+By all means.
+
+Bugs, and filling out the commonly used API wrappers for process and tasks.
+
