@@ -1,23 +1,25 @@
 # ibpm-remote
 
 A little package you can use in conjunction with with the 'Remote' Process Application (`./resources/Remote - #.twx`)
-to make testing BPM services a far less cumbersome.
+to make testing BPM services far less cumbersome.
 
 
 ## Warning
 
 *Do not deploy the provided Process Application any higher than is needed to do your testing*.
 
-This exposes some APIs which are impossibly dangerous in the wrong hands.
+The included TWX exposes APIs which allow arbitrary code execution.
 
 
 ## What you need
 
 - Node.js 8
-- An IBM BPM environment (I'm
+- An IBM BPM environment
 
-This package was built and tested against `8.5.7.201706` but there is no reason why it shouldn't work for versions
+This package was built and tested against `8.5.7.201706` but there's no reason why it shouldn't work for versions
 going as far back as `8.0`.
+
+I'm in the process of determining what the best way to backport the TWX to earlier versions.
 
 
 ## Background
@@ -137,6 +139,7 @@ BPM_REST_CONTEXT=
 
 ## TODOs
 
+- Expose companion web services for `executor` and `evaluator`
 - As you may have noticed, there are other undocumented folders inside `./api`. These are the beginnings of writing
   wrappers for BPM APIs. The aim is to write wrappers as I use them/have time.
 - (stretch) To write semi-stateful classes for Process/Task to make it far easier to work with the APIs.
