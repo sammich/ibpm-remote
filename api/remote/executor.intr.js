@@ -5,7 +5,7 @@ const executor = require('./executor')
 async function adder(a, b) {
     const result = await executor({
         name: 'Add Two Numbers',
-        appAcronym: 'SCSB'
+        appAcronym: 'RMTETT'
     }, {
         a,
         b
@@ -46,6 +46,28 @@ async function complexInputTest() {
                     d: new Date(2017, 2, 2, 2, 2, 2, 222)
                 }]
             }
+        }
+    })
+}
+
+async function remoteConstructorTest() {
+    return await executor({
+        name: 'Complex Input',
+        appAcronym: 'RMTETT'
+    }, {
+        obj: {
+            type: 'RemoteObject',
+            data: {
+                str: '1',
+            }
+        },
+        objs: {
+            type: 'RemoteObject',
+            data: [{
+                str: '1',
+            }, {
+                str: '2'
+            }]
         }
     })
 }
@@ -98,6 +120,20 @@ describe('executor', () => {
                 }]
             }
         })
+    })
+    
+    it(`Remote Constructor works`, async () => {
+        const result = await remoteConstructorTest()
+        
+        expect(result.obj).toEqual({
+            str: '1',
+        })
+    
+        expect(result.objs).toEqual([{
+            str: '1',
+        }, {
+            str: '2',
+        }])
     });
     
     it(`rejects on error output`, async () => {

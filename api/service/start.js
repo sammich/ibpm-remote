@@ -1,5 +1,6 @@
 const post = require('../../utils/rest').post,
-    joinParts = require('../../utils/join-keys')
+    joinParts = require('../../utils/join-keys'),
+    { isBpmError } = require('../../utils/bpm')
 
 module.exports = exec
 
@@ -25,21 +26,25 @@ async function exec(serviceId, inputs, options = {}, parts) {
         throw new Error('Service ID must be provided')
     }
     
-    const result = await post(`/service/${serviceId}?action=start`, {
-        params: {
-            parts: joinParts(parts)
-        },
-        data: {
-            params: inputs && JSON.stringify(inputs),
-            snapshotId: options.snapshotId,
-            createTask: options.createTask,
-            callerModelId: options.callerModelId,
-            callerModelBranchId: options.callerModelBranchId,
-            callerModelSnapshotId: options.callerModelSnapshotId,
-            callerProcessId: options.callerProcessId,
-            callerTaskId: options.callerTaskId
-        }
-    })
+    try {
+        const result = await post(`/service/${serviceId}?action=start`, {
+            params: {
+                parts: joinParts(parts)
+            },
+            data: {
+                params: inputs && JSON.stringify(inputs),
+                snapshotId: options.snapshotId,
+                createTask: options.createTask,
+                callerModelId: options.callerModelId,
+                callerModelBranchId: options.callerModelBranchId,
+                callerModelSnapshotId: options.callerModelSnapshotId,
+                callerProcessId: options.callerProcessId,
+                callerTaskId: options.callerTaskId
+            }
+        })
     
-    return result && result.data && result.data.data
+        return result && result.data && result.data.data
+    } catch (err) {
+        return Promise.reject(isBpmError(err) || err)
+    }
 }

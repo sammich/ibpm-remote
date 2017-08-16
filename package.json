@@ -5,7 +5,8 @@
   "author": "https://github.com/sammich",
   "license": "MIT",
   "scripts": {
-    "test": "node --inspect node_modules/.bin/jest --silent=false --colors --verbose --watch"
+    "test": "node node_modules/.bin/jest --silent=false --colors --verbose --watch",
+    "e2e": "node node_modules/.bin/jest --config jest.integration.conf.json --silent=false --colors --verbose"
   },
   "readmeFilename": "README.md",
   "devDependencies": {

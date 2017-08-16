@@ -1,4 +1,5 @@
 const fs = require('fs'),
+    path = require('path'),
     toc = require('markdown-toc'),
     bpmRestCaller = require('../utils/rest').get
     
@@ -17,11 +18,13 @@ function wr(text) {
 async function generate(apiDocs) {
     apiDocs.categories.map(genGroup)
     
-    const pre = '# ' + apiDocs.name + '\n' + apiDocs.description + '\n\n'
-    const systems = await bpmRestCaller('systems')
+    const pre = '# ' + apiDocs.name + '\n' + apiDocs.description + '\n\n',
+        systems = await bpmRestCaller('systems'),
+        bpmVersion = systems.data.systems[0].version,
+        fileName = `bpm-api-docs-${bpmVersion}`
     
-    fs.writeFileSync(`../generated/bpm-api-docs-${systems.data.systems[0].version}.json`, JSON.stringify(apiDocs, null, 2))
-    fs.writeFileSync(`../generated/bpm-api-docs-${systems.data.systems[0].version}.md`, pre + toc(md).content + '\n\n' + md)
+    fs.writeFileSync(path.join(__dirname, `../generated/${fileName}.json`), JSON.stringify(apiDocs, null, 2))
+    fs.writeFileSync(path.join(__dirname, `../generated/${fileName}.md`), pre + toc(md).content + '\n\n' + md)
 }
 
 //

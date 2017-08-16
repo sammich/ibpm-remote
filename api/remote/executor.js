@@ -35,6 +35,7 @@ async function exec(serviceSelector, inputs) {
     
     try {
         results = await start(EXECUTOR_SERVICE_ID, {
+            apiKey: process.env.REMOTE_EXECUTOR_API_KEY || process.env.REMOTE_API_KEY || 'abc123',
             service: serviceSelector,
             jsonInput: inputs && JSON.stringify(inputs)
         })

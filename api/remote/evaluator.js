@@ -1,6 +1,5 @@
-const { cleanUpBpmObject, isBpmError } = require('../../utils/bpm')
-
-const start = require('../service/start')
+const { cleanUpBpmObject, isBpmError } = require('../../utils/bpm'),
+    start = require('../service/start')
 
 module.exports = exec
 
@@ -18,17 +17,16 @@ async function exec(evalFunc) {
         throw new Error('Function must be provided')
     }
     
-    let results
-    
     try {
-        results = await start(EVALUATOR_SERVICE_ID, {
+        let results = await start(EVALUATOR_SERVICE_ID, {
+            apiKey: process.env.REMOTE_EXALUATOR_API_KEY || process.env.REMOTE_API_KEY || 'abc123',
             evalStr: '(' + evalFunc.toString() + ')()'
         })
+        
+        results = results && results.retVal
+    
+        return cleanUpBpmObject(results)
     } catch (err) {
         return Promise.reject(isBpmError(err) || err)
     }
-    
-    results = results && results.retVal
-    
-    return cleanUpBpmObject(results)
 }

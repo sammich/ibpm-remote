@@ -10,4 +10,25 @@ const executor = require('../').api.remote.executor;
     })
     
     console.log('1 + 2 = ' + result.total);
+})();
+
+
+(async function check() {
+    try {
+        const result = await executor({
+            name: 'Has Own Type',
+            appAcronym: 'SCSB'
+        }, {
+            a: {
+                type: 'SamType',
+                data: {
+                    Untitled1: 'asd'
+                }
+            }
+        })
+    
+        console.log('SamType', result.a);
+    } catch (e) {
+        console.error(e)
+    }
 })()

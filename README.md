@@ -40,7 +40,9 @@ By externalising the writing of the tests, we can free ourselves to use any fram
 
 ## Setup
 
-1. Install the provided `.twx` (twix?) file to your Process Center.
+1. Install the provided `Remote - <version>.twx` (twix?) file to your Process Center.
+1. For every Process Application to be tested with this package, you also need to copy the General System Service named
+   'Constructor'. This is required to create new Complex Objects
 1. Configure the environment variables (see below for list)
 1. Create a new script in your package and copy the sample script and run it to confirm your settings are correct.
 
@@ -95,7 +97,7 @@ system service.
 
 It also works around some issues with the Executor API and passing in complex objects.
 
-See `./api/remote/evaluator.intr.js` for an example.
+See `./api/remote/evaluator.intr.js` for examples.
 
 
 ## Sample Script
@@ -108,7 +110,7 @@ See `./api/remote/evaluator.intr.js` for an example.
         // a = 1, and b = 2
         const result = await executor({
             name: 'Add Two Numbers',
-            appAcronym: 'RMTE'
+            appAcronym: 'RMTETT'
         }, {
             a: 1,
             b: 2
@@ -135,11 +137,22 @@ BPM_SERVER_PROTOCOL=
 
 # default /rest/bpm/wle/v1
 BPM_REST_CONTEXT=
+
+# a service account with REST API access
+BPM_ADMIN_USER=
+BPM_ADMIN_PASS=
+
+# you can specify individual API keys
+REMOTE_EXALUATOR_API_KEY=
+REMOTE_EXECUTOR_API_KEY=
+
+# or use a default one
+REMOTE_API_KEY
+
 ```
 
 ## TODOs
 
-- Expose companion web services for `executor` and `evaluator`
 - As you may have noticed, there are other undocumented folders inside `./api`. These are the beginnings of writing
   wrappers for BPM APIs. The aim is to write wrappers as I use them/have time.
 - (stretch) To write semi-stateful classes for Process/Task to make it far easier to work with the APIs.
@@ -160,9 +173,15 @@ BPM_REST_CONTEXT=
   Names of methods are just illustrative for now.
 
 
+## Running Tests
+
+You can run the unit tests via `npm test` or the integrated tests with `npm run e2e`. You must have configured a BPM
+Process Center (or Server) installed with the latest TWX files in `/resources`.
+
+
 ## Contributing
 
 By all means.
 
-Bugs, and filling out the commonly used API wrappers for process and tasks.
+Bugs, and filling out the commonly used API wrappers for process and tasks are the current priority.
 
