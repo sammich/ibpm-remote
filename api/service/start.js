@@ -17,7 +17,7 @@ module.exports = exec
  * @param {string}  [options.callerModelSnapshotId] - The ID of the snapshot that determines the exact version of a given callerModelId. If a callerModelSnapshotId is specified, this does implicitly indicate that a Tip is not to be used, and the callerModelBranchId may not be specified in this case. If a callerModelId is specified, then either a callerModelSnapshotId or a callerModelBranchId is required.
  * @param {string}  [options.callerProcessId] - The ID of an existing process that can be associated with the new service instance. If a process ID is not specified, the new service instance will not be associated with an existing process. For secured Ajax services, this setting is also used to check whether the current user is authorized to start the Ajax service, by checking whether the process model relies on the Ajax service.
  * @param {string}  [options.callerTaskId] - The ID of an existing task that can be associated with the new service instance. If a task ID is not specified, the new service instance will not be associated with an existing task. For secured Ajax services, this setting is also used to check whether the current user is authorized to start the Ajax service, by checking whether the task model relies on the Ajax service.
- * @param {object}  [parts] - leave undefined for all items
+ * @param {object|boolean}  [parts]
  * @param {boolean} [parts.data]
  * @returns {Promise<*>}
  */
@@ -29,7 +29,7 @@ async function exec(serviceId, inputs, options = {}, parts) {
     try {
         const result = await post(`/service/${serviceId}?action=start`, {
             params: {
-                parts: joinParts(parts)
+                parts: parts === true ? 'all' : joinParts(parts, '|', 'none')
             },
             data: {
                 params: inputs && JSON.stringify(inputs),

@@ -5,12 +5,10 @@
  *
  *
  */
-
-
 module.exports.process = require('./process')
-module.exports.service = require('./service')
 module.exports.remote = require('./remote')
-
+module.exports.service = require('./service')
+module.exports.task = require('./task')
 
 /*
 Status

@@ -38,7 +38,7 @@ async function exec(serviceSelector, inputs) {
             apiKey: process.env.REMOTE_EXECUTOR_API_KEY || process.env.REMOTE_API_KEY || 'abc123',
             service: serviceSelector,
             jsonInput: inputs && JSON.stringify(inputs)
-        })
+        }, undefined, true)
     } catch (err) {
         return Promise.reject(isBpmError(err) || err)
     }

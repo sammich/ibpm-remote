@@ -1,39 +1,104 @@
-/**
- * @typedef {object} ProcessInstanceState
- * @property {string} executionState
- * @property {string} state
- * @property {string} piid
- * @property {string} dueDate
- * @property {object[]} tasks
- * @property {object} variables
- */
+const { deleteProcess, currentState } = require('../../api/process'),
+    Task = require('./Task')
 
-
-export default class ProcessInstance {
-    constructor(instanceIdOrRestData) {
+class ProcessInstance {
+    constructor(processIdOrRestData) {
         
-        // instanceId can't be zero, anyway
-        if (!instanceIdOrRestData) {
-            throw new Error('No instanceId or data provided')
+        // processId can't be zero, anyway
+        if (!processIdOrRestData) {
+            throw new Error('No processId or data provided')
         }
         
         if (typeof instanceId === 'number') {
-            this.instanceId = instanceIdOrRestData
+            this._rawData = {
+                piid: processIdOrRestData
+            }
+            // module user needs to call `load()` after this call path
         } else if (typeof instanceId === 'object') {
-            this._rawData = instanceIdOrRestData
+            this._rawData = processIdOrRestData
+            this._processRawData()
         } else {
             const err = new Error('Unknown input provided to constructor')
-            err.data = instanceIdOrRestData
+            err.data = processIdOrRestData
+            throw err
         }
     }
     
-    __processRestData() {
-        this._rawData
+    _processRawData() {
+        this._rawData.tasks = this._rawData.tasks.map(rawTask => new Task(rawTask))
+        
+        // order task ID asc
+        this._rawData.tasks.sort((a, b) => {
+            return a.id - b.id
+        })
     }
     
-    isValid // exists on the server in any state
-    reload // pull data from server
+    async load() {
+        this._rawData = await currentState(this.id, undefined, true, true)
+        this._processRawData()
+    }
+    
+    async reload() {
+        await this.load()
+    }
+    
+    get id() {
+        return this._rawData.piid
+    }
+    
+    get name() {
+        return this._rawData.name
+    }
+    
+    get tasks() {
+        return this._rawData.tasks
+    }
+    
+    get variables() {
+        return this._rawData.variables
+    }
+    
+    get failed() {
+        return this._rawData.state === 'STATE_FAILED'
+    }
+    
+    get tasjs() {
+        return this._rawData.tasks
+    }
+    
+    get finished() {
+        return this._rawData.executionState === 'Completed'
+    }
+    
+    remove() {
+        deleteProcess(this.id, undefined, true)
+    }
+    
+    getTask(nameFilter) {
+        if (!nameFilter) {
+            throw new Error('String or RegExp is required')
+        }
+        
+        const strMatch = typeof nameFilter === 'string'
+        
+        return this.tasks.find(task => {
+            return strMatch ? nameFilter === task.name : nameFilter.test(task.name)
+        })
+    }
+    
+    getTasks(nameFilter) {
+        if (!nameFilter) return this.tasks
+        
+        const strMatch = typeof nameFilter === 'string'
+        
+        return this.tasks.filter(task => {
+            return strMatch ? nameFilter === task.name : nameFilter.test(task.name)
+        })
+    }
 }
+
+module.exports = ProcessInstance
+
 /*
 
 {
