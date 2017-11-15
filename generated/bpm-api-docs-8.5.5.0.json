@@ -1,0 +1,4289 @@
+{
+  "name": "Business Process Manager REST APIs",
+  "description": "REST API for Business Process Manager",
+  "categories": [
+    {
+      "name": "Process API",
+      "description": "Process REST API",
+      "calls": [
+        {
+          "id": "processApi_RetrieveModel",
+          "name": "Retrieve Model",
+          "description": "Retrieves the model data (BPD Model) for a particular BPD",
+          "path": "/rest/bpm/wle/v1/processModel/<bpdId>?",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_processmodel_bpdid_get.htm",
+          "options": [
+            {
+              "name": "BPD ID",
+              "description": "Business Process Definition ID. You can use the \"v1/exposed/process\" API to retrieve the list of processes (BPDs) that are available to the user.",
+              "parameter": "bpdId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Process Application ID",
+              "description": "The process application ID begins with \"2066.xxx\". It can be found in in this tool by Other > Retrieve Process Applications.",
+              "parameter": "processAppId",
+              "type": "string",
+              "required": false
+            }
+          ],
+          "parts": [
+            "header",
+            "dataModel",
+            "diagram"
+          ]
+        },
+        {
+          "id": "taskApi_ExternalActivityModel",
+          "name": "External Activity Model",
+          "description": "Retrieves the model data for an external activity",
+          "path": "/rest/bpm/wle/v1/externalactivity/<externalActivityId>/model",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_externalactivity_externalactivityid_model_get.htm",
+          "options": [
+            {
+              "name": "External Activity ID",
+              "description": "ID of the external activity",
+              "parameter": "externalActivityId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "authoring",
+              "description": "Select if retrieving the model for process documentation.  The Snapshot ID or Branch ID option must be set when authoring is enabled.",
+              "parameter": "authoring",
+              "type": "boolean",
+              "required": false
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Process Application ID",
+              "description": "The process application ID begins with \"2066.xxx\". It can be found in in this tool by Other > Retrieve Process Applications.",
+              "parameter": "processAppId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ],
+          "parts": [
+            "dataModel"
+          ]
+        },
+        {
+          "id": "processApi_StartProcess",
+          "name": "Start Process",
+          "description": "Starts a new BPD instance",
+          "path": "/rest/bpm/wle/v1/process?action=start",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_post_start.htm",
+          "options": [
+            {
+              "name": "BPD ID",
+              "description": "Business Process Definition ID. You can use the \"v1/exposed/process\" API to retrieve the list of processes (BPDs) that are available to the user.",
+              "parameter": "bpdId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Process Application ID",
+              "description": "The process application ID begins with \"2066.xxx\". It can be found in in this tool by Other > Retrieve Process Applications.",
+              "parameter": "processAppId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Parameters",
+              "description": "A string containing a JSON expression that contains one or more input parameter settings. Each of the variables will be set in the context of the running process. Example: ....params={\"orderNumber\":\"5\",\"customerName\":{\"firstName\":\"John\",\"lastName\":\"Doe\"}}",
+              "parameter": "params",
+              "type": "string",
+              "required": false
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_CurrentState",
+          "name": "Current State",
+          "description": "Returns the current state of a BPD instance",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_get.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            },
+            {
+              "name": "Task Limit",
+              "description": "The maximum number of tasks to be returned.",
+              "parameter": "taskLimit",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Task Offset",
+              "description": "Specifies the index (origin 0) of the first task instance to be returned from the result set.",
+              "parameter": "taskOffset",
+              "type": "string",
+              "required": false
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_EvaluateJavaScript",
+          "name": "Evaluate JavaScript",
+          "description": "Evaluates a JavaScript expression",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=js",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_put_evaluate_a_javascript_expression.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            },
+            {
+              "name": "JavaScript Expression",
+              "description": "The JavaScript expression to evaluate",
+              "parameter": "script",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_UpdateDueDate",
+          "name": "Update Due Date",
+          "description": "Sets a new due date on a BPD instance",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=update",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_put_update_due_date.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            },
+            {
+              "name": "Due Date",
+              "description": "Due date in ISO-8601 format (e.g. 2011-01-05T03:15:30.000-00:00)",
+              "parameter": "dueDate",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_SuspendProcess",
+          "name": "Suspend Process",
+          "description": "Pauses a BPD instance",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=suspend",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_put_suspend,_resume,_terminate,_or_retry.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_ResumeProcess",
+          "name": "Resume Process",
+          "description": "Resumes a BPD instance",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=resume",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_put_suspend,_resume,_terminate,_or_retry.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_RetryProcess",
+          "name": "Retry Process",
+          "description": "Retries a BPD instance",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=retry",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_put_suspend,_resume,_terminate,_or_retry.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_TerminateProcess",
+          "name": "Terminate Process",
+          "description": "Terminates a BPD instance",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=terminate",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_put_suspend,_resume,_terminate,_or_retry.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_DeleteProcess",
+          "name": "Delete Process",
+          "description": "Deletes a BPD instance",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=delete",
+          "method": [
+            "DELETE"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_delete_delete_process_instance.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_RunAdhocEvent",
+          "name": "Run Adhoc Event",
+          "description": "Runs an adhoc event in the BPD instance. The available adhoc steps are available from the BPD model.",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=adhoc",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_put_run_an_adhoc_event_within_a_process.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            },
+            {
+              "name": "Step",
+              "description": "Step",
+              "parameter": "step",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_DeleteToken",
+          "name": "Delete Token",
+          "description": "Delete a token from a BPD instance",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=deleteToken&tokenId=<tokenId>&resume=<resume>",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_post_delete_token.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            },
+            {
+              "name": "Token ID",
+              "description": "The token ID",
+              "parameter": "tokenId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Resume",
+              "description": "Resumes a BPD instance",
+              "parameter": "resume",
+              "type": "boolean",
+              "values": [
+                "true"
+              ],
+              "required": false
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_MoveToken",
+          "name": "Move Token",
+          "description": "Move a token to a new activity",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=moveToken&tokenId=<tokenId>&target=<target>&resume=<resume>",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_post_move_token.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            },
+            {
+              "name": "Token ID",
+              "description": "The token ID",
+              "parameter": "tokenId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Target",
+              "description": "The target step ID",
+              "parameter": "target",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Resume",
+              "description": "Resumes a BPD instance",
+              "parameter": "resume",
+              "type": "boolean",
+              "values": [
+                "true"
+              ],
+              "required": false
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_AddComment",
+          "name": "Add Comment",
+          "description": "Adds a comment to a BPD instance",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=comment",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_post_comment.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            },
+            {
+              "name": "Comment",
+              "description": "The comment message",
+              "parameter": "comment",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Original Comment Id",
+              "description": "The original comment Id, for threaded comments",
+              "parameter": "origCommentId",
+              "type": "string",
+              "required": false
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_AddDocument",
+          "name": "Add Document",
+          "description": "Adds a document to a BPD instance",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=addDocument",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_post_add_document.htm",
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ],
+          "options": [
+            {
+              "id": "option_BpdInstanceId",
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            },
+            {
+              "id": "option_DocumentName",
+              "name": "Name",
+              "description": "Name of the document",
+              "parameter": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Type",
+              "description": "Type of document",
+              "parameter": "docType",
+              "type": "extended_option_selector",
+              "required": true,
+              "groups": [
+                {
+                  "name": "File",
+                  "value": "file",
+                  "options": [
+                    {
+                      "id": "option_DocumentFile",
+                      "name": "Document File",
+                      "description": "File path of the document",
+                      "parameter": "data",
+                      "type": "FILE",
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "name": "URL",
+                  "value": "url",
+                  "options": [
+                    {
+                      "id": "option_DocumentUrl",
+                      "name": "Document URL",
+                      "description": "URL to the document",
+                      "parameter": "docUrl",
+                      "type": "STRING",
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "name": "Text",
+                  "value": "file",
+                  "options": [
+                    {
+                      "id": "option_DocumentText",
+                      "name": "Document Text",
+                      "description": "Document text contents",
+                      "parameter": "data",
+                      "type": "TEXT",
+                      "required": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "processApi_UpdateDocument",
+          "name": "Update Document",
+          "description": "Updates a document associated with a BPD instance",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=updateDocument",
+          "method": [
+            "POST",
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_post_update_document.htm",
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ],
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            },
+            {
+              "name": "Document ID",
+              "description": "ID of the document",
+              "parameter": "docId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Type",
+              "description": "Type of document",
+              "parameter": "docType",
+              "type": "extended_option_selector",
+              "required": true,
+              "groups": [
+                {
+                  "name": "File",
+                  "value": "file",
+                  "options": [
+                    {
+                      "id": "option_DocumentFile",
+                      "name": "Document File",
+                      "description": "File path of the document",
+                      "parameter": "data",
+                      "type": "FILE",
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "name": "URL",
+                  "value": "url",
+                  "options": [
+                    {
+                      "id": "option_DocumentUrl",
+                      "name": "Document URL",
+                      "description": "URL to the document",
+                      "parameter": "docUrl",
+                      "type": "STRING",
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "name": "Text",
+                  "value": "file",
+                  "options": [
+                    {
+                      "id": "option_DocumentText",
+                      "name": "Document Text",
+                      "description": "Document text contents",
+                      "parameter": "data",
+                      "type": "TEXT",
+                      "required": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "processApi_DeleteDocument",
+          "name": "Delete Document",
+          "description": "Deletes a document from a BPD instance",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=deleteDocument",
+          "method": [
+            "POST",
+            "DELETE"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_delete_delete_document.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            },
+            {
+              "name": "Document ID",
+              "description": "ID of the document",
+              "parameter": "docId",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_ProcessQueries",
+          "name": "Process Queries",
+          "description": "Retrieves a list of queries for BPD instance data.",
+          "path": "/rest/bpm/wle/v1/processes/queries",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_processes_queries_get.htm",
+          "options": [
+            {
+              "name": "Kind",
+              "description": "The kind attribute for the queries, used to filter",
+              "parameter": "kind",
+              "type": "list",
+              "values": [
+                "",
+                "SAVED_SEARCH"
+              ],
+              "required": false
+            },
+            {
+              "name": "Content",
+              "description": "Specifies a comma-separated list of content values. When using this parameter, only queries which return the specified content values in their result set are returned. For example, if you specified content=TASK.PRIORITY,TASK.TKIID in your request URI query string, then the response will include only those queries that return both content types",
+              "parameter": "content",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "includeTaskData",
+              "description": "A string indicating if the response should include task information data. Valid values are: 'TRUE' and 'FALSE'. The default value is 'FALSE'",
+              "parameter": "includeTaskData",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processApi_ProcessQueryAttributes",
+          "name": "Process Query Attributes",
+          "description": "Retrieves a list of attributes of a query for BPD instance data.",
+          "path": "/rest/bpm/wle/v1/processes/query/<queryName>/attributes",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_processes_query_queryname_attributes_get.htm",
+          "options": [
+            {
+              "name": "Query Name",
+              "description": "Name of the saved query",
+              "parameter": "queryName",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "includeTaskData",
+              "description": "A string indicating if the response should include task information data. Valid values are: 'TRUE' and 'FALSE'. The default value is 'FALSE'",
+              "parameter": "includeTaskData",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processApi_ProcessQueryEntityList",
+          "name": "Process Query Entity List",
+          "description": "Retrieves a list of BPD instance entities obtained via a query.",
+          "path": "/rest/bpm/wle/v1/processes/query/<queryName>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_processes_query_queryname_get.htm",
+          "options": [
+            {
+              "name": "Query Name",
+              "description": "Name of the saved query",
+              "parameter": "queryName",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Selected Attributes",
+              "description": "Comma-separated list of attributes, in upper case letters, which specifies the attributes that are retrieved by the query. If no selected attributes are specified, all of the attributes that are defined on the query are returned.",
+              "parameter": "selectedAttributes",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Interaction Filter",
+              "description": "Name of a predefined user interaction.",
+              "parameter": "interactionFilter",
+              "type": "list",
+              "values": [
+                "",
+                "ADMINISTER",
+                "BROWSE_ALL"
+              ],
+              "required": false
+            },
+            {
+              "name": "Query Filter",
+              "description": "A query table condition language expression that performs additional filtering on the result set. All attributes defined on the query can be referenced.",
+              "parameter": "queryFilter",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Process Application Name",
+              "description": "Name of the process application",
+              "parameter": "processAppName",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Sort Attributes",
+              "description": "Comma-separated list of sort criteria applied to the list of returned process instance entities. Each list entry has the form attribute [ASC|DESC] where ascending is the default.",
+              "parameter": "sortAttributes",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Offset",
+              "description": "Specifies the number of entities to be skipped. Offset 0 refers to the first entity from the result set.If this parameter is not specified, the default value of 0 is used",
+              "parameter": "offset",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Size",
+              "description": "Specifies the maximum number of entities to be returned. If not specified, then the default size defined for the query will be used.",
+              "parameter": "size",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "includeTaskData",
+              "description": "A string indicating if the response should include task information data. Valid values are: 'TRUE' and 'FALSE'. The default value is 'FALSE'",
+              "parameter": "includeTaskData",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "filterByCurrentUser",
+              "description": "This parameter is used only when the request is being executed by an administrative user, otherwise it is ignored. This parameter is a flag which indicates whether or not the search results should be restricted to those entities associated with the current user. A value of false means that an unfiltered search will be performed, whereas a value of true indicates that the search results will be filtered by the current user. If the current user is an administrative user, then the default is to perform a filtered search. If the current user is not an administrative user, then this parameter is ignored and a filtered search is performed",
+              "parameter": "filterByCurrentUser",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processApi_ProcessQueryEntityListCount",
+          "name": "Process Query Entity List Count",
+          "description": "Retrieves the number of BPD instance entities in a query meeting specified criteria.",
+          "path": "/rest/bpm/wle/v1/processes/query/<queryName>/count",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_processes_query_queryname_count_get.htm",
+          "options": [
+            {
+              "name": "Query Name",
+              "description": "Name of the saved query",
+              "parameter": "queryName",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Query Filter",
+              "description": "A query table condition language expression that performs additional filtering on the result set. All attributes defined on the query can be referenced.",
+              "parameter": "queryFilter",
+              "type": "string",
+              "required": false,
+              "clonable": true
+            },
+            {
+              "name": "Offset",
+              "description": "Specifies the number of entities to be skipped. Offset 0 refers to the first entity from the result set.If this parameter is not specified, the default value of 0 is used",
+              "parameter": "offset",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Size",
+              "description": "Specifies the maximum number of entities to be returned. If not specified, then the default size defined for the query will be used.",
+              "parameter": "size",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "filterByCurrentUser",
+              "description": "This parameter is used only when the request is being executed by an administrative user, otherwise it is ignored. This parameter is a flag which indicates whether or not the search results should be restricted to those entities associated with the current user. A value of false means that an unfiltered search will be performed, whereas a value of true indicates that the search results will be filtered by the current user. If the current user is an administrative user, then the default is to perform a filtered search. If the current user is not an administrative user, then this parameter is ignored and a filtered search is performed",
+              "parameter": "filterByCurrentUser",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processApi_FireTimer",
+          "name": "Fire Timer",
+          "description": "Allows the current user to manually fire an inline or attached timer",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>?action=fireTimer",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_post_fire_timer.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            },
+            {
+              "name": "Timer Token ID",
+              "description": "Token ID of the timer. A token can be found through ->Task API ->Task Details.",
+              "parameter": "timerTokenId",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "diagram",
+            "header",
+            "data",
+            "executionTree"
+          ]
+        },
+        {
+          "id": "processApi_SendMessage",
+          "name": "Send Message",
+          "description": "Allows the current user to target an event message to the given process instance",
+          "path": "/rest/bpm/wle/v1/process?action=sendMessage",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_post_sendmessage.htm",
+          "options": [
+            {
+              "name": "Message",
+              "description": "Message to be sent",
+              "parameter": "message",
+              "type": "text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "processApi_CurrentlyExecuting",
+          "name": "Currently Executing",
+          "description": "Lists all processes that are currently executing",
+          "path": "/rest/bpm/wle/v1/process/currentlyExecuting",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_get_currently_executing.htm"
+        },
+        {
+          "id": "processApi_ExposedProcesses",
+          "name": "Exposed Processes",
+          "description": "Retrieves exposed processes",
+          "path": "/rest/bpm/wle/v1/exposed/process",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_exposed_type_get.htm"
+        },
+        {
+          "id": "processApi_ShowProcessActions",
+          "name": "Show Process Actions",
+          "description": "Retrieves a list of actions (both adhoc and standard) that are available to the current user for the specified process instance.",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>/actions",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_actions_get.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "processApi_ProcessActions",
+          "name": "Process Actions",
+          "description": "Retrieves a list of actions that can be performed on process instances.",
+          "path": "/rest/bpm/wle/v1/process/actions",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_actions_get.htm",
+          "options": [
+            {
+              "name": "Instance IDs",
+              "description": "A comma-separated list of instance IDs or process IDs, also known as a piids. Can be found through Task API > Task Details.",
+              "parameter": "instanceIds",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Actions",
+              "description": "A comma-separated list of actions",
+              "parameter": "actions",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processApi_BulkInstanceDetails",
+          "name": "Bulk Instance Details",
+          "description": "Retrieves the details for a set of instances",
+          "path": "/rest/bpm/wle/v1/process?action=getdetails",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_get_bulk_instance_details.htm",
+          "options": [
+            {
+              "name": "Instance IDs",
+              "description": "A comma-separated list of instance IDs or process IDs, also known as a piids. Can be found through Task API > Task Details.",
+              "parameter": "instanceIds",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "data"
+          ]
+        },
+        {
+          "id": "processApi_AdHocActivities",
+          "name": "AdHoc Activities",
+          "description": "Returns a list of ad hoc activities.",
+          "path": "/rest/bpm/wle/v1/process/<instanceId>/adHocActivities",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_process_instanceid_adhocactivities_get.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Service API",
+      "description": "Service REST API",
+      "calls": [
+        {
+          "id": "serviceApi_RetrieveModel",
+          "name": "Retrieve Model",
+          "description": "Retrieves the model data (service model) for a particular service.",
+          "path": "/rest/bpm/wle/v1/serviceModel/<serviceId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_servicemodel_serviceid_get.htm",
+          "options": [
+            {
+              "name": "Service ID or Name",
+              "description": "A service model ID or a string of the form: <project-shortname>@<service-name>",
+              "parameter": "serviceId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Process Application ID",
+              "description": "The process application ID begins with \"2066.xxx\". It can be found in in this tool by Other > Retrieve Process Applications.",
+              "parameter": "processAppId",
+              "type": "string",
+              "required": false
+            }
+          ],
+          "parts": [
+            "header",
+            "dataModel",
+            "diagram"
+          ]
+        },
+        {
+          "id": "serviceApi_StartService",
+          "name": "Start Service",
+          "description": "Runs a service until a natural stop (either a Coach, Postpone or the end).",
+          "path": "/rest/bpm/wle/v1/service/<serviceId>?action=start",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_service_instanceid_post_start.htm",
+          "options": [
+            {
+              "name": "Service ID or Name",
+              "description": "A service model ID or a string of the form: <project-shortname>@<service-name>",
+              "parameter": "serviceId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Parameters",
+              "description": "A string containing a JSON expression that contains one or more input parameter settings. Each of the variables will be set in the context of the running process. Example: ....params={\"orderNumber\":\"5\",\"customerName\":{\"firstName\":\"John\",\"lastName\":\"Doe\"}}",
+              "parameter": "params",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Create Task",
+              "description": "Indicates whether or not a corresponding task should be created when starting the service.",
+              "parameter": "createTask",
+              "type": "boolean",
+              "required": false
+            },
+            {
+              "name": "Caller Task Id",
+              "description": "The task id of the task that is associated with starting this service.",
+              "parameter": "callerTaskId",
+              "type": "string",
+              "required": false
+            }
+          ],
+          "parts": [
+            "data"
+          ]
+        },
+        {
+          "id": "serviceApi_ResumeService",
+          "name": "Resume Service",
+          "description": "Resumes a running service or task until a natural stop (either a Coach, postpone or the end)",
+          "path": "/rest/bpm/wle/v1/service/<instanceId>?action=<action>",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_service_instanceid_put_resume.htm",
+          "options": [
+            {
+              "name": "Service Instance ID",
+              "description": "The service instance ID, which is the value that is returned as the \"key\" element within the ServiceRunModel response when starting a service",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Button or Endpoint",
+              "description": "Represents buttons or endPoints on a coach",
+              "parameter": "action",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "data"
+          ]
+        },
+        {
+          "id": "serviceApi_EvaluateJavaScript",
+          "name": "Evaluate JavaScript",
+          "description": "Evaluates a javascript expression against a currently running service",
+          "path": "/rest/bpm/wle/v1/service/<instanceId>?action=js",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_service_instanceid_put_evaluate_javascript.htm",
+          "options": [
+            {
+              "name": "Service Instance ID",
+              "description": "The service instance ID, which is the value that is returned as the \"key\" element within the ServiceRunModel response when starting a service",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "JavaScript Expression",
+              "description": "The JavaScript expression to evaluate",
+              "parameter": "script",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "serviceApi_GetData",
+          "name": "Get Data",
+          "description": "Retrieves a value from a field",
+          "path": "/rest/bpm/wle/v1/service/<instanceId>?action=getData",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_service_instanceid_get_getdata.htm",
+          "options": [
+            {
+              "name": "Service Instance ID or Task ID",
+              "description": "Either a service instance id (a string of the form @<nnnn>, where <nnnn> is a string of digits) or a task instance id (a string of digits).   The service instance id can be obtained from the \"key\" field that is returned in the response of ->Service API->Start Service. The task instance id can be obtained from the \"task.tkiid\" fields that are returned in the response of ->Process API->Current State",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Fields",
+              "description": "A comma-separated list of fields",
+              "parameter": "fields",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "serviceApi_SetData",
+          "name": "Set Data",
+          "description": "Sets a value to a field",
+          "path": "/rest/bpm/wle/v1/service/<instanceId>?action=setData",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_service_instanceid_put_setdata.htm",
+          "options": [
+            {
+              "name": "Service Instance ID or Task ID",
+              "description": "Either a service instance id (a string of the form @<nnnn>, where <nnnn> is a string of digits) or a task instance id (a string of digits).   The service instance id can be obtained from the \"key\" field that is returned in the response of ->Service API->Start Service. The task instance id can be obtained from the \"task.tkiid\" fields that are returned in the response of ->Process API->Current State",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Parameters",
+              "description": "A string containing a JSON expression that contains one or more input parameter settings. Each of the variables will be set in the context of the running process. Example: ....params={\"orderNumber\":\"5\",\"customerName\":{\"firstName\":\"John\",\"lastName\":\"Doe\"}}",
+              "parameter": "params",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "serviceApi_StopService",
+          "name": "Stop Service",
+          "description": "Stops a service",
+          "path": "/rest/bpm/wle/v1/service/<instanceId>?action=stop",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_service_instanceid_put_stop.htm",
+          "options": [
+            {
+              "name": "Service Instance ID",
+              "description": "The service instance ID, which is the value that is returned as the \"key\" element within the ServiceRunModel response when starting a service",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "serviceApi_CurrentlyRunning",
+          "name": "Currently Running",
+          "description": "Lists all services for this user that are currently running",
+          "path": "/rest/bpm/wle/v1/service/currentlyRunning",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_service_instanceid_get_currently_running.htm"
+        },
+        {
+          "id": "serviceApi_ExposedServices",
+          "name": "Exposed Services",
+          "description": "Retrieves exposed services",
+          "path": "/rest/bpm/wle/v1/exposed/service",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_exposed_type_get.htm",
+          "options": [
+            {
+              "name": "Include Service Subtypes",
+              "description": "A comma-separated list of one or more service subtypes to be included in the result set. If not specified, then all service subtypes will be included.",
+              "parameter": "includeServiceSubtypes",
+              "type": "string",
+              "required": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Task API",
+      "description": "Task REST API",
+      "calls": [
+        {
+          "id": "taskApi_TaskDetails",
+          "name": "Task Details",
+          "description": "Retrieves the details of a task",
+          "path": "/rest/bpm/wle/v1/task/<taskId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_get.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "data"
+          ]
+        },
+        {
+          "id": "taskApi_GetData",
+          "name": "Get Data",
+          "description": "Retrieves a value from a field",
+          "path": "/rest/bpm/wle/v1/task/<taskId>?action=getData",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_get_getdata.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Fields",
+              "description": "A comma-separated list of fields",
+              "parameter": "fields",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "taskApi_SetData",
+          "name": "Set Data",
+          "description": "Sets a value to a field",
+          "path": "/rest/bpm/wle/v1/task/<taskId>?action=setData",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_put_setdata.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Parameters",
+              "description": "A string containing a JSON expression that contains one or more input parameter settings. Each of the variables will be set in the context of the running process. Example: ....params={\"orderNumber\":\"5\",\"customerName\":{\"firstName\":\"John\",\"lastName\":\"Doe\"}}",
+              "parameter": "params",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "taskApi_BulkTaskDetails",
+          "name": "Bulk Task Details",
+          "description": "Retrieves the details for a set of tasks",
+          "path": "/rest/bpm/wle/v1/task?action=getdetails",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_get_bulk_task_details.htm",
+          "options": [
+            {
+              "name": "Task IDs",
+              "description": "A comma-separated list of task IDs",
+              "parameter": "taskIDs",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "data"
+          ]
+        },
+        {
+          "id": "taskApi_StartTask",
+          "name": "Start Task",
+          "description": "Starts a task",
+          "path": "/rest/bpm/wle/v1/task/<taskId>?action=start",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_put_start_task.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "taskApi_AssignTaskToUser",
+          "name": "Assign Task To User",
+          "description": "Assigns a task to a user",
+          "path": "/rest/bpm/wle/v1/task/<taskId>?action=assign",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_put_assign_task.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "To User",
+              "description": "Assign to a particular user",
+              "parameter": "toUser",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "data"
+          ]
+        },
+        {
+          "id": "taskApi_AssignTaskToGroup",
+          "name": "Assign Task To Group",
+          "description": "Assigns a task to a group",
+          "path": "/rest/bpm/wle/v1/task/<taskId>?action=assign",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_put_assign_task.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "To Group",
+              "description": "Assign to a particular group",
+              "parameter": "toGroup",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "data"
+          ]
+        },
+        {
+          "id": "taskApi_AssignTaskToMe",
+          "name": "Assign Task To Me",
+          "description": "Assigns a task to the current user",
+          "path": "/rest/bpm/wle/v1/task/<taskId>?action=assign&toMe=true",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_put_assign_task.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "data"
+          ]
+        },
+        {
+          "id": "taskApi_AssignTaskBack",
+          "name": "Assign Task Back",
+          "description": "Assigns a task to the original owner",
+          "path": "/rest/bpm/wle/v1/task/<taskId>?action=assign&back=true",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_put_assign_task.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "data"
+          ]
+        },
+        {
+          "id": "taskApi_UpdateDueDate",
+          "name": "Update Due Date",
+          "description": "Sets a new due date on a task",
+          "path": "/rest/bpm/wle/v1/task/<taskId>?action=update",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_put_update.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Due Date",
+              "description": "Due date in ISO-8601 format (e.g. 2011-01-05T03:15:30.000-00:00)",
+              "parameter": "dueDate",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "data"
+          ]
+        },
+        {
+          "id": "taskApi_UpdatePriority",
+          "name": "Update Priority",
+          "description": "Sets a new priority on a task",
+          "path": "/rest/bpm/wle/v1/task/<taskId>?action=update",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_put_update.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Priority",
+              "description": "Priority value e.g. Highest/10, High/20, Normal/30, Low/40 or Lowest/50",
+              "parameter": "priority",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "data"
+          ]
+        },
+        {
+          "id": "taskApi_FinishTask",
+          "name": "Finish Task",
+          "description": "Closes a task",
+          "path": "/rest/bpm/wle/v1/task/<taskId>?action=finish",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_put_complete,_finish.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Parameters",
+              "description": "Parameters to finish the task/activity",
+              "parameter": "params",
+              "type": "string",
+              "required": false
+            }
+          ],
+          "parts": [
+            "data"
+          ]
+        },
+        {
+          "id": "taskApi_CancelTask",
+          "name": "Cancel Task",
+          "description": "Cancels a task",
+          "path": "/rest/bpm/wle/v1/task/<taskId>?action=cancel",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_put_cancel.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "taskApi_TaskClientSettings",
+          "name": "Task Client Settings",
+          "description": "Retrieves client settings for a specific task instance.",
+          "path": "/rest/bpm/wle/v1/task/<taskId>/clientSettings/<type>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_clientsettings_type_get.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Type",
+              "description": "Client type - the only predefined value is \"IBM_WLE_Coach\"",
+              "parameter": "type",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "taskApi_TaskActions",
+          "name": "Task Actions",
+          "description": "Retrieves a list of actions that can be performed on task instances.",
+          "path": "/rest/bpm/wle/v1/task/actions",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_actions_get.htm",
+          "options": [
+            {
+              "name": "Task IDs",
+              "description": "A comma-separated list of task IDs",
+              "parameter": "taskIDs",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Actions",
+              "description": "A comma-separated list of actions the caller is interested in, used as a filter for the response. If not specified then information about all possible actions is returned.",
+              "parameter": "actions",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "taskApi_TaskQueries",
+          "name": "Task Queries",
+          "description": "Retrieves a list of queries for task instance data.",
+          "path": "/rest/bpm/wle/v1/tasks/queries",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_tasks_queries_get.htm",
+          "options": [
+            {
+              "name": "Process Application Name",
+              "description": "Name of the process application",
+              "parameter": "processAppName",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Kind",
+              "description": "The kind attribute for the queries, used to filter",
+              "parameter": "kind",
+              "type": "list",
+              "values": [
+                "",
+                "SAVED_SEARCH"
+              ],
+              "required": false
+            },
+            {
+              "name": "Content",
+              "description": "Specifies a comma-separated list of content values. When using this parameter, only queries which return the specified content values in their result set are returned. For example, if you specified content=TASK.PRIORITY,TASK.TKIID in your request URI query string, then the response will include only those queries that return both content types",
+              "parameter": "content",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "taskApi_TaskQueryAttributes",
+          "name": "Task Query Attributes",
+          "description": "Retrieves a list of attributes of a query for task instance data.",
+          "path": "/rest/bpm/wle/v1/tasks/query/<queryName>/attributes",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_tasks_query_queryname_attributes_get.htm",
+          "options": [
+            {
+              "name": "Query Name",
+              "description": "Name of the saved query",
+              "parameter": "queryName",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Process Application Name",
+              "description": "Name of the process application",
+              "parameter": "processAppName",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "taskApi_TaskQueryEntityList",
+          "name": "Task Query Entity List",
+          "description": "Retrieves a list of task instance entities obtained via a query.",
+          "path": "/rest/bpm/wle/v1/tasks/query/<queryName>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_tasks_query_queryname_get.htm",
+          "options": [
+            {
+              "name": "Query Name",
+              "description": "Name of the saved query",
+              "parameter": "queryName",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Selected Attributes",
+              "description": "Comma-separated list of attributes, in upper case letters, which specifies the attributes that are retrieved by the query. If no selected attributes are specified, all of the attributes that are defined on the query are returned.",
+              "parameter": "selectedAttributes",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Interaction Filter",
+              "description": "Name of a predefined user interaction.",
+              "parameter": "interactionFilter",
+              "type": "list",
+              "values": [
+                "",
+                "WORK_ON",
+                "WORK_ON_ACTIVE",
+                "ASSESS_AVAILABLE",
+                "ASSESS_AND_WORK_ON",
+                "CHECK_COMPLETED",
+                "ADMINISTER",
+                "BROWSE_ALL"
+              ],
+              "required": false
+            },
+            {
+              "name": "Query Filter",
+              "description": "A query table condition language expression that performs additional filtering on the result set. All attributes defined on the query can be referenced.",
+              "parameter": "queryFilter",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Search Filter",
+              "description": "A search expression used as input to the task search engine.",
+              "parameter": "searchFilter",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Process Application Name",
+              "description": "Name of the process application",
+              "parameter": "processAppName",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Sort Attributes",
+              "description": "Comma-separated list of sort criteria applied to the list of returned process instance entities. Each list entry has the form attribute [ASC|DESC] where ascending is the default.",
+              "parameter": "sortAttributes",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Offset",
+              "description": "Specifies the number of entities to be skipped. Offset 0 refers to the first entity from the result set.If this parameter is not specified, the default value of 0 is used",
+              "parameter": "offset",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Size",
+              "description": "Specifies the maximum number of entities to be returned. If not specified, then the default size defined for the query will be used.",
+              "parameter": "size",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "filterByCurrentUser",
+              "description": "This parameter is used only when the request is being executed by an administrative user, otherwise it is ignored. This parameter is a flag which indicates whether or not the search results should be restricted to those entities associated with the current user. A value of false means that an unfiltered search will be performed, whereas a value of true indicates that the search results will be filtered by the current user. If the current user is an administrative user, then the default is to perform a filtered search. If the current user is not an administrative user, then this parameter is ignored and a filtered search is performed",
+              "parameter": "filterByCurrentUser",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "taskApi_TaskQueryEntityListCount",
+          "name": "Task Query Entity List Count",
+          "description": "Retrieves the number of task instance entities in a query meeting specified criteria.",
+          "path": "/rest/bpm/wle/v1/tasks/query/<queryName>/count",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_tasks_query_queryname_count_get.htm",
+          "options": [
+            {
+              "name": "Query Name",
+              "description": "Name of the saved query",
+              "parameter": "queryName",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Interaction Filter",
+              "description": "Name of a predefined user interaction.",
+              "parameter": "interactionFilter",
+              "type": "list",
+              "values": [
+                "",
+                "WORK_ON",
+                "WORK_ON_ACTIVE",
+                "ASSESS_AVAILABLE",
+                "ASSESS_AND_WORK_ON",
+                "CHECK_COMPLETED",
+                "BROWSE_ALL"
+              ],
+              "required": false
+            },
+            {
+              "name": "Query Filter",
+              "description": "A query table condition language expression that performs additional filtering on the result set. All attributes defined on the query can be referenced.",
+              "parameter": "filter",
+              "type": "string",
+              "required": false,
+              "clonable": true
+            },
+            {
+              "name": "Search Filter",
+              "description": "A search expression used as input to the task search engine.",
+              "parameter": "searchFilter",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Offset",
+              "description": "Specifies the number of entities to be skipped. Offset 0 refers to the first entity from the result set.If this parameter is not specified, the default value of 0 is used",
+              "parameter": "offset",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Size",
+              "description": "Specifies the maximum number of entities to be returned. If not specified, then the default size defined for the query will be used.",
+              "parameter": "size",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "filterByCurrentUser",
+              "description": "This parameter is used only when the request is being executed by an administrative user, otherwise it is ignored. This parameter is a flag which indicates whether or not the search results should be restricted to those entities associated with the current user. A value of false means that an unfiltered search will be performed, whereas a value of true indicates that the search results will be filtered by the current user. If the current user is an administrative user, then the default is to perform a filtered search. If the current user is not an administrative user, then this parameter is ignored and a filtered search is performed",
+              "parameter": "filterByCurrentUser",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "taskApi_InviteCollaboration",
+          "name": "Invite a user for Task Collaboration",
+          "description": "Invite a user to collaborate on a task.",
+          "path": "/rest/bpm/wle/v1/task/<taskId>?action=invite&user=<user>&message=<message>",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_taskid_post_invite_task_collaboration.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "User",
+              "description": "Represents the user to be invited for Task Collaboration",
+              "parameter": "user",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Message",
+              "description": "Message to be sent",
+              "parameter": "message",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "taskApi_GetNext",
+          "name": "Get Next",
+          "description": "Claim the next task, selected based on filter criteria",
+          "path": "/rest/bpm/wle/v1/task?action=getNext&query=<queryName>&queryFilter=<queryFilter>&sortAttributes=<sortAttributes>",
+          "method": [
+            "PUT",
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_put_get_next.htm",
+          "options": [
+            {
+              "name": "Query Name",
+              "description": "Name of the saved query",
+              "parameter": "queryName",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Query Filter",
+              "description": "A query table condition language expression that performs additional filtering on the result set. All attributes defined on the query can be referenced.",
+              "parameter": "queryFilter",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Sort Attributes",
+              "description": "Comma-separated list of sort criteria applied to the list of returned process instance entities. Each list entry has the form attribute [ASC|DESC] where ascending is the default.",
+              "parameter": "sortAttributes",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "taskApi_BulkClaim",
+          "name": "Bulk Claim Tasks",
+          "description": "Claim responsibility for multiple task instances",
+          "path": "/rest/bpm/wle/v1/task?action=claim",
+          "method": [
+            "PUT",
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_put_bulk_claim.htm",
+          "options": [
+            {
+              "name": "Task IDs",
+              "description": "A comma-separated list of task IDs",
+              "parameter": "taskIDs",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "taskApi_BulkCancel",
+          "name": "Bulk Cancel Tasks",
+          "description": "Release multiple claimed task instances",
+          "path": "/rest/bpm/wle/v1/task?action=cancel",
+          "method": [
+            "PUT",
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_task_put_bulk_cancel.htm",
+          "options": [
+            {
+              "name": "Task IDs",
+              "description": "A comma-separated list of task IDs",
+              "parameter": "taskIDs",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Task Template API",
+      "description": "Task Template REST API Calls",
+      "calls": [
+        {
+          "id": "taskTemplateApi_TaskTemplateDetails",
+          "name": "Task Template Details",
+          "description": "Retrieves the details of a task template",
+          "path": "/rest/bpm/wle/v1/taskTemplate/<templateId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_tasktemplate_templateid_get.htm",
+          "options": [
+            {
+              "name": "Task Template ID",
+              "description": "ID of the task template",
+              "parameter": "templateId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "taskTemplateApi_TaskTemplateClientSettings",
+          "name": "Task Template Client Settings",
+          "description": "Retrieves client settings for a specific task template.",
+          "path": "/rest/bpm/wle/v1/taskTemplate/<templateId>/clientSettings/<type>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_tasktemplate_templateid_clientsettings_type_get.htm",
+          "options": [
+            {
+              "name": "Task Template ID",
+              "description": "ID of the task template",
+              "parameter": "templateId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Type",
+              "description": "Client type - the only predefined value is \"IBM_WLE_Coach\"",
+              "parameter": "type",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "taskTemplateApi_TaskTemplateQueries",
+          "name": "Task Template Queries",
+          "description": "Retrieves a list of queries for task template data.",
+          "path": "/rest/bpm/wle/v1/taskTemplates/queries",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_tasktemplates_queries_get.htm",
+          "options": [
+            {
+              "name": "Process Application Name",
+              "description": "Name of the process application",
+              "parameter": "processAppName",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Kind",
+              "description": "The kind attribute for the queries, used to filter",
+              "parameter": "kind",
+              "type": "list",
+              "values": [
+                "",
+                "SAVED_SEARCH"
+              ],
+              "required": false
+            },
+            {
+              "name": "Content",
+              "description": "Specifies a comma-separated list of content values. When using this parameter, only queries which return the specified content values in their result set are returned. For example, if you specified content=TASK.PRIORITY,TASK.TKIID in your request URI query string, then the response will include only those queries that return both content types",
+              "parameter": "content",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "taskTemplateApi_TaskTemplateQueryAttributes",
+          "name": "Task Template Query Attributes",
+          "description": "Retrieves a list of attributes of a query for task template data.",
+          "path": "/rest/bpm/wle/v1/taskTemplates/query/<queryName>/attributes",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_tasktemplates_query_queryname_attributes_get.htm",
+          "options": [
+            {
+              "name": "Query Name",
+              "description": "Name of the saved query",
+              "parameter": "queryName",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Process Application Name",
+              "description": "Name of the process application",
+              "parameter": "processAppName",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "taskTemplateApi_TaskTemplateQueryEntityList",
+          "name": "Task Template Query Entity List",
+          "description": "Retrieves a list of task template entities obtained via a query.",
+          "path": "/rest/bpm/wle/v1/taskTemplates/query/<queryName>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_tasktemplates_query_queryname_get.htm",
+          "options": [
+            {
+              "name": "Query Name",
+              "description": "Name of the saved query",
+              "parameter": "queryName",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Selected Attributes",
+              "description": "Comma-separated list of attributes, in upper case letters, which specifies the attributes that are retrieved by the query. If no selected attributes are specified, all of the attributes that are defined on the query are returned.",
+              "parameter": "selectedAttributes",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Interaction Filter",
+              "description": "Name of a predefined user interaction.",
+              "parameter": "interactionFilter",
+              "type": "list",
+              "values": [
+                "",
+                "CREATE"
+              ],
+              "required": false
+            },
+            {
+              "name": "Process Application Name",
+              "description": "Name of the process application",
+              "parameter": "processAppName",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Sort Attributes",
+              "description": "Comma-separated list of sort criteria applied to the list of returned process instance entities. Each list entry has the form attribute [ASC|DESC] where ascending is the default.",
+              "parameter": "sortAttributes",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Offset",
+              "description": "Specifies the number of entities to be skipped. Offset 0 refers to the first entity from the result set.If this parameter is not specified, the default value of 0 is used",
+              "parameter": "offset",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Size",
+              "description": "Specifies the maximum number of entities to be returned. If not specified, then the default size defined for the query will be used.",
+              "parameter": "size",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "taskTemplateApi_TaskTemplateQueryEntityListCount",
+          "name": "Task Template Query Entity List Count",
+          "description": "Retrieves the number of task template entities in a query meeting specified criteria.",
+          "path": "/rest/bpm/wle/v1/taskTemplates/query/<queryName>/count",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_tasktemplates_query_queryname_count_get.htm",
+          "options": [
+            {
+              "name": "Query Name",
+              "description": "Name of the saved query",
+              "parameter": "queryName",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Interaction Filter",
+              "description": "Name of a predefined user interaction.",
+              "parameter": "interactionFilter",
+              "type": "list",
+              "values": [
+                "",
+                "CREATE"
+              ],
+              "required": false
+            },
+            {
+              "name": "Process Application Name",
+              "description": "Name of the process application",
+              "parameter": "processAppName",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Size",
+              "description": "Specifies the maximum number of entities to be returned. If not specified, then the default size defined for the query will be used.",
+              "parameter": "size",
+              "type": "string",
+              "required": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Activity API",
+      "description": "Activity related REST API calls.",
+      "calls": [
+        {
+          "id": "activityApi_availableActions",
+          "name": "Available Actions",
+          "description": "Retrieve available actions for the user making the request and given activity instance id.",
+          "path": "/rest/bpm/wle/v1/activity/<instanceId>/availableActions",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_activity_instanceid_availableactions_get.htm",
+          "options": [
+            {
+              "name": "Activity instance ID",
+              "description": "The instance ID of the activity, also known as aiid.",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "activityApi_activityDetails",
+          "name": "Activity Details",
+          "description": "Retrieve details for given activity instance id.",
+          "path": "/rest/bpm/wle/v1/activity/<instanceId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_activity_instanceid_get.htm",
+          "options": [
+            {
+              "name": "Activity instance ID",
+              "description": "The instance ID of the activity, also known as aiid.",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "activityApi_actionStart",
+          "name": "Start Activity",
+          "description": "Starts a manual activity.",
+          "path": "/rest/bpm/wle/v1/activity/<instanceId>?action=ACTION_START_ACTIVITY",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_activity_instanceid_put.htm",
+          "options": [
+            {
+              "name": "Activity instance ID",
+              "description": "The instance ID of the activity, also known as aiid.",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "activityApi_tasks",
+          "name": "Tasks",
+          "description": "A list of current tasks.",
+          "path": "/rest/bpm/wle/v1/activity/<instanceId>/tasks",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_activity_instanceid_tasks_get.htm",
+          "options": [
+            {
+              "name": "Activity instance ID",
+              "description": "The instance ID of the activity, also known as aiid.",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Search API",
+      "description": "Search REST API",
+      "calls": [
+        {
+          "id": "searchApi_ExecuteQuery",
+          "name": "Execute Query",
+          "description": "Performs a custom search",
+          "path": "/rest/bpm/wle/v1/search/query",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_search_query_put_perform_custom_search.htm",
+          "options": [
+            {
+              "name": "Columns",
+              "description": "A comma-separated list of column names that should be returned by the search. Valid column names are: \"taskId\", \"instanceId\", \"bpdName\", \"taskSubject\", \"taskArrived\", \"taskStarted\", \"taskFinished\", plus any columns associated with tracked business data. If this parameter is not specified, then the following columns are returned by default: \"taskId\", \"instanceId\", \"bpdName\" and \"taskSubject\".",
+              "parameter": "columns",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Condition",
+              "description": "Query condition: \"<field>|<value>\" or \"<field>|<op>|<value>\"",
+              "parameter": "condition",
+              "type": "string",
+              "required": false,
+              "clonable": true
+            },
+            {
+              "name": "Sort",
+              "description": "Name of primary sort column",
+              "parameter": "sort",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Second Sort",
+              "description": "Name of secondary sort column",
+              "parameter": "secondSort",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Organization",
+              "description": "A string indicating how the results should be organized. Valid values are: 'byTask' and 'byInstance'. The default value is 'byInstance'.",
+              "parameter": "organization",
+              "type": "list",
+              "values": [
+                "byInstance",
+                "byTask"
+              ],
+              "required": false
+            },
+            {
+              "name": "Size",
+              "description": "Specifies the maximum number of entities to be returned. If not specified, then the default size defined for the query will be used.",
+              "parameter": "size",
+              "type": "integer",
+              "required": false
+            },
+            {
+              "name": "Offset",
+              "description": "Specifies the number of entities to be skipped. Offset 0 refers to the first entity from the result set.If this parameter is not specified, the default value of 0 is used",
+              "parameter": "offset",
+              "type": "integer",
+              "required": false
+            },
+            {
+              "name": "Save as Name",
+              "description": "Save this custom query as a saved search for this user",
+              "parameter": "saveAsName",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Perform the query",
+              "description": "A flag which indicates whether or not to perform the query.  If not specified, the default value of true is used.",
+              "parameter": "run",
+              "type": "boolean",
+              "values": [
+                "true"
+              ],
+              "required": false
+            },
+            {
+              "name": "Share the query with other users",
+              "description": "A flag which indicates whether or not to share the query with other users.  If not specified, the default value of false is used.",
+              "parameter": "shared",
+              "type": "boolean",
+              "required": false
+            },
+            {
+              "name": "filterByCurrentUser",
+              "description": "This parameter is used only when the request is being executed by an administrative user, otherwise it is ignored. This parameter is a flag which indicates whether or not the search results should be restricted to those entities associated with the current user. A value of false means that an unfiltered search will be performed, whereas a value of true indicates that the search results will be filtered by the current user. If the current user is an administrative user, then the default is to perform a filtered search. If the current user is not an administrative user, then this parameter is ignored and a filtered search is performed",
+              "parameter": "filterByCurrentUser",
+              "type": "boolean",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "searchApi_QueryPerformance",
+          "name": "Execute Performance Query",
+          "description": "Performs a custom query against the performance server",
+          "path": "/rest/bpm/wle/v1/performance/query",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_performance_query_get.htm",
+          "options": [
+            {
+              "name": "Filter",
+              "description": "A string representing a filter to be used with the search.",
+              "parameter": "filter",
+              "type": "string",
+              "required": true,
+              "clonable": true
+            },
+            {
+              "name": "Columns",
+              "description": "A comma-separated list of column names that should be returned by the search. Valid column names are: \"taskId\", \"instanceId\", \"bpdName\", \"taskSubject\", \"taskArrived\", \"taskStarted\", \"taskFinished\", plus any columns associated with tracked business data. If this parameter is not specified, then the following columns are returned by default: \"taskId\", \"instanceId\", \"bpdName\" and \"taskSubject\".",
+              "parameter": "columns",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Sort",
+              "description": "Name of primary sort column",
+              "parameter": "sort",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Second Sort",
+              "description": "Name of secondary sort column",
+              "parameter": "secondSearch",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Condition",
+              "description": "Query condition: \"<field>|<value>\" or \"<field>|<op>|<value>\"",
+              "parameter": "condition",
+              "type": "string",
+              "required": false,
+              "clonable": true
+            },
+            {
+              "name": "Only Rollups",
+              "description": "Return only summarized data (true/false)",
+              "parameter": "onlyRollups",
+              "type": "boolean",
+              "required": false
+            },
+            {
+              "name": "Rollup Rule",
+              "description": "Formula to use for summarizing the data (AVG, SUM, MIN, MAX, COUNT)",
+              "parameter": "rollupRule",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "searchApi_QueryPerformanceInstance",
+          "name": "Execute Performance Instance Query",
+          "description": "Retrieves the history information (tracked business and process data) for a BPD instance",
+          "path": "/rest/bpm/wle/v1/performance/instance/<instanceId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_performance_instance_piid_get.htm",
+          "options": [
+            {
+              "name": "Process Instance ID",
+              "description": "The Process ID, also known as a piid, can be found through Task API > Task Details",
+              "parameter": "instanceId",
+              "type": "instanceid",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "searchApi_SearchMetadata",
+          "name": "Search Metadata",
+          "descrtiption": "searchApi_SearchMetadata_Description",
+          "path": "/rest/bpm/wle/v1/search/meta/<type>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_search_meta_type_get.htm",
+          "options": [
+            {
+              "name": "Type",
+              "description": "The type of metadata to be returned",
+              "parameter": "type",
+              "type": "list",
+              "values": [
+                "column",
+                "constraintColumn",
+                "taskStatus",
+                "businessData",
+                "savedSearch",
+                "instanceStatus",
+                "priority"
+              ],
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Business Object API",
+      "description": "Business Object API",
+      "calls": [
+        {
+          "id": "businessObjectApi_BusinessObjectModel",
+          "name": "Get Definition",
+          "description": "Retrieve the Definition of Business Object",
+          "path": "/rest/bpm/wle/v1/businessobject/<boId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_businessobject_boid_get.htm",
+          "options": [
+            {
+              "name": "Business Object ID",
+              "description": "The Business Object ID",
+              "parameter": "boId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Organization API",
+      "description": "REST API pertaining to users and groups.",
+      "calls": [
+        {
+          "id": "organizationApi_Users",
+          "name": "Users",
+          "description": "Returns a list of users",
+          "path": "/rest/bpm/wle/v1/users",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_users_get.htm",
+          "options": [
+            {
+              "name": "Name Filter",
+              "description": "An optional simple regular expression to be used to filter the list of groups returned. Example: \"tw_*\" will return all groups whose names begin with \"tw_\".",
+              "parameter": "filter",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Maximum Results",
+              "description": "The maximum number of users to return (optional)",
+              "parameter": "maxresult",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Reassign Task ID",
+              "description": "Only include users able to be assigned this task (optional)",
+              "parameter": "assignTaskidFilter",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Collaboration Task ID",
+              "description": "Only include users able to collaborate on this task (optional)",
+              "parameter": "collabTaskidFilter",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Include Experts",
+              "description": "Include experts in list of users able to collaborate (optional)",
+              "parameter": "includeTaskExperts",
+              "type": "boolean",
+              "values": [
+                "true"
+              ],
+              "required": false
+            },
+            {
+              "name": "Sort",
+              "description": "Sort the list by name (optional)",
+              "parameter": "sort",
+              "type": "boolean",
+              "values": [
+                "true"
+              ],
+              "required": false
+            },
+            {
+              "name": "Include Internal Memberships",
+              "description": "Includes internal memberships when membership information is returned",
+              "parameter": "includeInternalMemberships",
+              "type": "boolean",
+              "values": [
+                "true"
+              ],
+              "required": false
+            },
+            {
+              "name": "Refresh User",
+              "description": "Refreshes fullname and group memberships of users for member of the group that are referred by the policyAction \"ACTION_REFRESH_USER.\"",
+              "parameter": "refreshUser",
+              "type": "boolean",
+              "values": [
+                "false"
+              ],
+              "required": false
+            }
+          ],
+          "parts": [
+            "memberships"
+          ]
+        },
+        {
+          "id": "organizationApi_UserDetails",
+          "name": "User Details",
+          "description": "Returns information about a single user",
+          "path": "/rest/bpm/wle/v1/user/<user>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_user_usernameorid_get.htm",
+          "options": [
+            {
+              "name": "User Name",
+              "description": "Name of the user",
+              "parameter": "user",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Include Internal Memberships",
+              "description": "Includes internal memberships when membership information is returned",
+              "parameter": "includeInternalMemberships",
+              "type": "boolean",
+              "values": [
+                "true"
+              ],
+              "required": false
+            },
+            {
+              "name": "Refresh User",
+              "description": "Refreshes fullname and group memberships of users for member of the group that are referred by the policyAction \"ACTION_REFRESH_USER.\"",
+              "parameter": "refreshUser",
+              "type": "boolean",
+              "values": [
+                "false"
+              ],
+              "required": false
+            }
+          ],
+          "parts": [
+            "memberships"
+          ]
+        },
+        {
+          "id": "organizationApi_UserDetailsByUserName",
+          "name": "User Details by userName",
+          "description": "Returns information about a single user",
+          "path": "/rest/bpm/wle/v1/user",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_user_get.htm",
+          "options": [
+            {
+              "name": "User Name",
+              "description": "Name of the user",
+              "parameter": "userName",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Include Internal Memberships",
+              "description": "Includes internal memberships when membership information is returned",
+              "parameter": "includeInternalMemberships",
+              "type": "boolean",
+              "values": [
+                "true"
+              ],
+              "required": false
+            },
+            {
+              "name": "Refresh User",
+              "description": "Refreshes fullname and group memberships of users for member of the group that are referred by the policyAction \"ACTION_REFRESH_USER.\"",
+              "parameter": "refreshUser",
+              "type": "boolean",
+              "values": [
+                "false"
+              ],
+              "required": false
+            }
+          ],
+          "parts": [
+            "memberships"
+          ]
+        },
+        {
+          "id": "organizationApi_UserDetailsByUserID",
+          "name": "User Details by userID",
+          "description": "Returns information about a single user",
+          "path": "/rest/bpm/wle/v1/user",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_user_get.htm",
+          "options": [
+            {
+              "name": "User ID",
+              "description": "ID of the user",
+              "parameter": "userID",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Include Internal Memberships",
+              "description": "Includes internal memberships when membership information is returned",
+              "parameter": "includeInternalMemberships",
+              "type": "boolean",
+              "values": [
+                "true"
+              ],
+              "required": false
+            },
+            {
+              "name": "Refresh User",
+              "description": "Refreshes fullname and group memberships of users for member of the group that are referred by the policyAction \"ACTION_REFRESH_USER.\"",
+              "parameter": "refreshUser",
+              "type": "boolean",
+              "values": [
+                "false"
+              ],
+              "required": false
+            }
+          ],
+          "parts": [
+            "memberships"
+          ]
+        },
+        {
+          "id": "organizationApi_CurrentUser",
+          "name": "Current User",
+          "description": "Returns information about the current logged-in user",
+          "path": "/rest/bpm/wle/v1/user/current",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_user_usernameorid_get.htm",
+          "options": [
+            {
+              "name": "Include Internal Memberships",
+              "description": "Includes internal memberships when membership information is returned",
+              "parameter": "includeInternalMemberships",
+              "type": "boolean",
+              "values": [
+                "true"
+              ],
+              "required": false
+            }
+          ],
+          "parts": [
+            "memberships"
+          ]
+        },
+        {
+          "id": "organizationApi_SetPreference",
+          "name": "Set User Preference",
+          "description": "Sets a user preference value",
+          "path": "/rest/bpm/wle/v1/user/<user>?action=setPreference",
+          "method": [
+            "PUT"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_user_usernameorid_put.htm",
+          "options": [
+            {
+              "name": "User Name",
+              "description": "Name of the user",
+              "parameter": "user",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Preference Key",
+              "description": "A string which indicates the user preference to be set. In addition to email, notification, locale, fallback, assignandrun, other custom user attribute names may also be specified, provided that they have been defined in Process Designer",
+              "parameter": "key",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Preference Value",
+              "description": "The new value of the user preference",
+              "parameter": "value",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "organizationApi_Groups",
+          "name": "Groups",
+          "description": "Returns a list of groups",
+          "path": "/rest/bpm/wle/v1/groups",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_groups_get.htm",
+          "options": [
+            {
+              "name": "Name Filter",
+              "description": "An optional simple regular expression to be used to filter the list of groups returned. Example: \"tw_*\" will return all groups whose names begin with \"tw_\".",
+              "parameter": "filter",
+              "type": "string",
+              "required": false
+            }
+          ],
+          "parts": [
+            "members"
+          ]
+        },
+        {
+          "id": "organizationApi_GroupDetails",
+          "name": "Group Details",
+          "description": "Returns information about a single group",
+          "path": "/rest/bpm/wle/v1/group/<group>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_group_groupnameorid_get.htm",
+          "options": [
+            {
+              "name": "Group Name",
+              "description": "Name of the group",
+              "parameter": "group",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "members"
+          ]
+        },
+        {
+          "id": "organizationApi_GroupUpdateMembershipAdd",
+          "name": "Add Group Member",
+          "description": "Add a member to a group",
+          "path": "/rest/bpm/wle/v1/group/<groupPathParameter>?action=addMember",
+          "method": [
+            "PUT",
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_group_groupnameorid_put.htm",
+          "options": [
+            {
+              "name": "Group Name",
+              "description": "Name of the group",
+              "parameter": "groupPathParameter",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "User",
+              "description": "User name or ID to be added or removed from the group",
+              "parameter": "user",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Group",
+              "description": "Group name or ID to be added or removed from the group",
+              "parameter": "group",
+              "type": "string",
+              "required": false
+            }
+          ],
+          "parts": [
+            "members"
+          ]
+        },
+        {
+          "id": "organizationApi_GroupUpdateMembershipRemove",
+          "name": "Remove Group Member",
+          "description": "Remove a member from a group",
+          "path": "/rest/bpm/wle/v1/group/<groupPathParameter>?action=removeMember",
+          "method": [
+            "PUT",
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_group_groupnameorid_put.htm",
+          "options": [
+            {
+              "name": "Group Name",
+              "description": "Name of the group",
+              "parameter": "groupPathParameter",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "User",
+              "description": "User name or ID to be added or removed from the group",
+              "parameter": "user",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Group",
+              "description": "Group name or ID to be added or removed from the group",
+              "parameter": "group",
+              "type": "string",
+              "required": false
+            }
+          ],
+          "parts": [
+            "members"
+          ]
+        },
+        {
+          "id": "organizationApi_TeamDetails_ByTeamId",
+          "name": "Team Details (by Team ID)",
+          "description": "Returns information about a single team, which is identified by its ID.",
+          "path": "/rest/bpm/wle/v1/team/<teamId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_team_teamid_get.htm",
+          "options": [
+            {
+              "name": "Team ID",
+              "description": "The ID of the team.",
+              "parameter": "teamId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "organizationApi_TeamDetails_ByTeamName",
+          "name": "Team Details (by Team Name)",
+          "description": "Returns information about a single team, which is identified by its name.",
+          "path": "/rest/bpm/wle/v1/team",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_team_get.htm",
+          "options": [
+            {
+              "name": "Team Name",
+              "description": "The name of the team.",
+              "parameter": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Process Documentation API",
+      "description": "Process Documentation REST API",
+      "calls": [
+        {
+          "id": "processDocApi_Assets",
+          "name": "Assets",
+          "description": "Returns a list of assets",
+          "path": "/rest/bpm/wle/v1/assets",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_assets_get.htm",
+          "options": [
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_AssetsCompare",
+          "name": "Assets Comparison",
+          "description": "Returns a list of assets with comparison information",
+          "path": "/rest/bpm/wle/v1/assets/compare",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_assets_compare_get.htm",
+          "options": [
+            {
+              "name": "Source Snapshot ID",
+              "description": "The Snapshot ID of the comparison source",
+              "parameter": "srcSnapshotId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Target Branch ID",
+              "description": "The Branch ID or the comparison target",
+              "parameter": "destBranchId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_snapshotsInProjects",
+          "name": "Snapshots in a project",
+          "description": "Return a list of snapshots in a project",
+          "path": "/rest/bpm/wle/v1/project/<projectId>/snapshots",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_project_projectid_snapshots_get.htm",
+          "options": [
+            {
+              "name": "Project ID",
+              "description": "The Project ID is the same as the process application ID. It begins with \"2066.xxx\" and can be found in in this tool by Other > Retrieve Process Applications.",
+              "parameter": "projectId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_snapshotChgHistory",
+          "name": "Snapshot change histories",
+          "description": "Return a list of change histories for a snapshot",
+          "path": "/rest/bpm/wle/v1/snapshot/<snapshotId>/changehistory",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_snapshot_snapshotid_changehistory_get.htm",
+          "options": [
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_snapshotsCompare",
+          "name": "Delta changes between two snapshots",
+          "description": "Return a list of the delta changes between two snapshots",
+          "path": "/rest/bpm/wle/v1/snapshot/comparehistory",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_snapshot_comparehistory_get.htm",
+          "options": [
+            {
+              "name": "Snapshot ID (1)",
+              "description": "The Snapshot ID (1). Starts with \"2064.xxx....\"",
+              "parameter": "snapshotId1",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Branch ID (1)",
+              "description": "The Branch ID (1). Starts with \"2063.xxx....\". It is required when snapshotId1 is \"tip\".",
+              "parameter": "branchId1",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Snapshot ID (2)",
+              "description": "The Snapshot ID (2). Starts with \"2064.xxx....\"",
+              "parameter": "snapshotId2",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Branch ID (2)",
+              "description": "The Branch ID (2). Starts with \"2063.xxx....\". It is required when snapshotId2 is \"tip\".",
+              "parameter": "branchId2",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_processAppSettings",
+          "name": "Process App Settings",
+          "description": "Retrieve Process App Settings",
+          "path": "/rest/bpm/wle/v1/processAppSettings",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_processappsettings_get.htm",
+          "options": [
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Recurse Dependencies",
+              "description": "Whether to recursively display process app dependencies",
+              "parameter": "recurse",
+              "type": "boolean",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_processVisualModel",
+          "name": "Process Visual Model",
+          "description": "Retrieve Process Visual Model for a BPD",
+          "path": "/rest/bpm/wle/v1/visual/processModel/<bpdId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_visual_processmodel_bpdid_get.htm",
+          "options": [
+            {
+              "name": "BPD ID",
+              "description": "Business Process Definition ID. You can use the \"v1/exposed/process\" API to retrieve the list of processes (BPDs) that are available to the user.",
+              "parameter": "bpdId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_processInstancesVisualModel",
+          "name": "Process Instances Visual Model",
+          "description": "Retrieve Process Visual Model for BPD instances",
+          "path": "/rest/bpm/wle/v1/visual/processModel/instances",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_visual_processmodel_instances_get.htm",
+          "options": [
+            {
+              "name": "BPD Instance IDs",
+              "description": "The array of BPD Instance IDs, such as [3,4]",
+              "parameter": "instanceIds",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "BPD ID",
+              "description": "Business Process Definition ID. You can use the \"v1/exposed/process\" API to retrieve the list of processes (BPDs) that are available to the user.",
+              "parameter": "bpdId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_serviceVisualModel",
+          "name": "Service Visual Model",
+          "description": "Retrieve Service Visual Model",
+          "path": "/rest/bpm/wle/v1/visual/serviceModel/<serviceId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_visual_servicemodel_serviceid_get.htm",
+          "options": [
+            {
+              "name": "Service ID",
+              "description": "The service ID",
+              "parameter": "serviceId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_AISModel",
+          "name": "Advanced Integration Service",
+          "description": "Retrieve service model of the Advanced Integration Service",
+          "path": "/rest/bpm/wle/v1/SCAServiceModel/<serviceId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_scaservicemodel_serviceid_get.htm",
+          "options": [
+            {
+              "name": "Service ID",
+              "description": "The service ID",
+              "parameter": "serviceId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_ParticipantGroupModel",
+          "name": "Participant Group",
+          "description": "Retrieve the details of Participant Group",
+          "path": "/rest/bpm/wle/v1/participantGroup/<participantGroupId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_participantgroup_participantgroupid_get.htm",
+          "options": [
+            {
+              "name": "Participant Group ID",
+              "description": "The Participant Group ID",
+              "parameter": "participantGroupId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_EPVModel",
+          "name": "Exposed Process Value",
+          "description": "Retrieve the details of Exposed Process Value",
+          "path": "/rest/bpm/wle/v1/epv/<epvId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_epv_epvid.htm",
+          "options": [
+            {
+              "name": "Exposed Process Value ID",
+              "description": "The Exposed Process Value ID",
+              "parameter": "epvId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_TrackingGroupModel",
+          "name": "Tracking Group",
+          "description": "Retrieve the details of Tracking Group",
+          "path": "/rest/bpm/wle/v1/trackinggroup/<tgId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_trackinggroup_tgid.htm",
+          "options": [
+            {
+              "name": "Tracking Group ID",
+              "description": "The Tracking Group ID, or tgId, can be obtained from the response of Process Documentation API > Assets.",
+              "parameter": "tgId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_TimingIntervalModel",
+          "name": "Timing Interval",
+          "description": "Retrieve the details of Timing Interval",
+          "path": "/rest/bpm/wle/v1/timinginterval/<timingIntervalId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_timinginterval_timingintervalid.htm",
+          "options": [
+            {
+              "name": "Timing Interval ID",
+              "description": "The timing interval ID. This is a unique value that is system generated for each type of Timing Interval. See the TIMINGINTERVALS view in BPD for a mapping from a name to the TIMING_INTERVAL_ID value.",
+              "parameter": "timingIntervalId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_ucaModel",
+          "name": "Undercover Agent",
+          "description": "Retrieve the details of Undercover Agent",
+          "path": "/rest/bpm/wle/v1/uca/<ucaId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_uca_ucaid.htm",
+          "options": [
+            {
+              "name": "Undercover Agent ID",
+              "description": "The Undercover Agent ID",
+              "parameter": "ucaId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_webServiceModel",
+          "name": "Web Service",
+          "description": "Retrieve the details of Web Service",
+          "path": "/rest/bpm/wle/v1/webservice/<wsId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_webservice_wsid.htm",
+          "options": [
+            {
+              "name": "Web Service ID or Name",
+              "description": "The Web Service ID or name. A Web Service ID starts with \"7.\" followed by a much longer string of characters. (i.e. 7.82145699-78e7-43d0-9cae-2bb0c715b8c7)",
+              "parameter": "wsId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "processDocApi_slaModel",
+          "name": "Service Level Agreement",
+          "description": "Retrieve the details of Service Level Agreement",
+          "path": "/rest/bpm/wle/v1/sla/<slaId>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_sla_slaid.htm",
+          "options": [
+            {
+              "name": "Service Level Agreement ID",
+              "description": "The Service Level Agreement ID",
+              "parameter": "slaId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Snapshot ID",
+              "description": "Snapshot ID for a particular process. Begins with \"2064.xxx....\"",
+              "parameter": "snapshotId",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Branch ID",
+              "description": "The branch ID. Begins with \"2063.xxx...\"",
+              "parameter": "branchId",
+              "type": "string",
+              "required": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Other",
+      "description": "Other REST API Calls",
+      "calls": [
+        {
+          "id": "otherApi_RetrieveSystemDetails",
+          "name": "Retrieve System Details",
+          "description": "Retrieves system details",
+          "path": "/rest/bpm/wle/v1/systems",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_systems_get.htm"
+        },
+        {
+          "id": "otherApi_REPResource",
+          "name": "Resource Environment Provider Properties",
+          "description": "Retrieves properties from a specified Resource Environment Provider",
+          "path": "/rest/bpm/wle/v1/system/rep/<providerName>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_system_rep_providername_get.htm",
+          "options": [
+            {
+              "name": "Resource Environment Provider Name",
+              "description": "The name of the resource Environment provider",
+              "parameter": "providerName",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Resource Environment Provider Properties",
+              "description": "JSON Array of property names",
+              "parameter": "properties",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "systemEnvironment_variable",
+          "name": "Retrieve System Environment Variable",
+          "description": "Retrieves system environment variable",
+          "path": "/rest/bpm/wle/v1/system/env/variable",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_system_env_variable_get.htm",
+          "options": [
+            {
+              "name": "BPD Shortname",
+              "description": "The BPD project short name. Can be found through Other > Retrieve Process Applications.",
+              "parameter": "bpdShortname",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "variable name",
+              "description": "variable name",
+              "parameter": "name",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "otherApi_ProcessApps",
+          "name": "Retrieve Process Applications",
+          "description": "Retrieves the process applications",
+          "path": "/rest/bpm/wle/v1/processApps",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_processapps_get.htm"
+        },
+        {
+          "id": "otherApi_Toolkits",
+          "name": "Retrieve Toolkits",
+          "description": "Retrieves the toolkits",
+          "path": "/rest/bpm/wle/v1/toolkit",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_toolkit_get.htm"
+        },
+        {
+          "id": "otherApi_ImportApp",
+          "name": "Create Process Application from BPMN Archive",
+          "description": "Creates a process application from a BPMN 2.0 archive",
+          "path": "/rest/bpm/wle/v1/processApps",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_processapps_post.htm",
+          "options": [
+            {
+              "id": "option_GenerateAIS",
+              "name": "Generate Advanced Integration Services",
+              "description": "Create Advanced Integration Services for unimplemented services",
+              "parameter": "genAIS",
+              "type": "boolean",
+              "required": false
+            },
+            {
+              "id": "option_DocumentFile",
+              "name": "Document File",
+              "description": "File path of the document",
+              "parameter": "data",
+              "type": "file",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "otherApi_ImportToolkit",
+          "name": "Create Toolkit from BPMN Archive",
+          "description": "Creates a toolkit from a BPMN 2.0 archive",
+          "path": "/rest/bpm/wle/v1/toolkit",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_toolkit_post.htm",
+          "options": [
+            {
+              "id": "option_GenerateAIS",
+              "name": "Generate Advanced Integration Services",
+              "description": "Create Advanced Integration Services for unimplemented services",
+              "parameter": "genAIS",
+              "type": "boolean",
+              "required": false
+            },
+            {
+              "id": "option_DocumentFile",
+              "name": "Document File",
+              "description": "File path of the document",
+              "parameter": "data",
+              "type": "file",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "otherApi_ExposedScoreboards",
+          "name": "Exposed Scoreboards",
+          "description": "Retrieves exposed scoreboards",
+          "path": "/rest/bpm/wle/v1/exposed/scoreboard",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_exposed_type_get.htm"
+        },
+        {
+          "id": "otherApi_ExposedReports",
+          "name": "Exposed Reports",
+          "description": "Retrieves exposed reports",
+          "path": "/rest/bpm/wle/v1/exposed/report",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_exposed_type_get.htm"
+        },
+        {
+          "id": "otherApi_ExposedItems",
+          "name": "Exposed Items (All)",
+          "description": "Retrieves all items exposed to the user: processes (BPDs), services, reports and scoreboards",
+          "path": "/rest/bpm/wle/v1/exposed",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_exposed_type_get.htm",
+          "options": [
+            {
+              "name": "Include Service Subtypes",
+              "description": "A comma-separated list of one or more service subtypes to be included in the result set. If not specified, then all service subtypes will be included.",
+              "parameter": "includeServiceSubtypes",
+              "type": "string",
+              "required": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Social API",
+      "description": "Social REST API",
+      "calls": [
+        {
+          "id": "social_instance_stream_get",
+          "name": "Retrieve Instance Stream",
+          "description": "Retrieves the activity stream for a specific BPD instance",
+          "path": "/rest/bpm/wle/v1/social/instance/<instanceId>/stream",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_instance_instanceid_stream_get.htm",
+          "options": [
+            {
+              "name": "Instance ID",
+              "description": "The instance ID or process ID, also known as a piid. Can be found through Task API > Task Details.",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Sort Order",
+              "description": "The sort order. Choose 'asc' for ascending, 'desc' for descending. Default is 'desc'.",
+              "parameter": "sort",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Page",
+              "description": "The page of items to return. The default is no paging. Pages start at 1. Using 0 disables paging.",
+              "parameter": "page",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Page Size",
+              "description": "The number of items to return on a page. The default is 10.",
+              "parameter": "pagesize",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Since",
+              "description": "A filter for returning items only available since this date/time. The format is in the form of \"2010-10-10T00:00:00\"",
+              "parameter": "since",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "social_mentions_get",
+          "name": "Retrieve Mentions",
+          "description": "Retrieves a stream of items in which the current user was mentioned",
+          "path": "/rest/bpm/wle/v1/social/instances/mentions",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_instances_mentions_get.htm",
+          "options": [
+            {
+              "name": "Sort Order",
+              "description": "The sort order. Choose 'asc' for ascending, 'desc' for descending. Default is 'desc'.",
+              "parameter": "sort",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Page",
+              "description": "The page of items to return. The default is no paging. Pages start at 1. Using 0 disables paging.",
+              "parameter": "page",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Page Size",
+              "description": "The number of items to return on a page. The default is 10.",
+              "parameter": "pagesize",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Since",
+              "description": "A filter for returning items only available since this date/time. The format is in the form of \"2010-10-10T00:00:00\"",
+              "parameter": "since",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "social_mentions_delete",
+          "name": "Delete Mentions",
+          "description": "Deletes a mentioned item",
+          "path": "/rest/bpm/wle/v1/social/task/<taskId>/mentions",
+          "method": [
+            "DELETE"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_task_taskid_mentions_delete.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "Task ID, the unique integer ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "social_mentions_delete_all",
+          "name": "Delete All Mentions",
+          "description": "Deletes all mentioned items for current user",
+          "path": "/rest/bpm/wle/v1/social/task/mentions/all",
+          "method": [
+            "DELETE"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_task_mentions_all_delete.htm"
+        },
+        {
+          "id": "social_instances_get",
+          "name": "Retrieve All Following",
+          "description": "Returns the list of all instances that the current user is following",
+          "path": "/rest/bpm/wle/v1/social/instances/following",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_instances_following_get.htm"
+        },
+        {
+          "id": "social_instance_get",
+          "name": "Retrieve Following Instance",
+          "description": "Returns true if the current user is following a specific BPD instance",
+          "path": "/rest/bpm/wle/v1/social/instance/<instanceId>/following",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_instance_instanceid_following_get.htm",
+          "options": [
+            {
+              "name": "Instance ID",
+              "description": "The instance ID or process ID, also known as a piid. Can be found through Task API > Task Details.",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "social_instance_post",
+          "name": "Start Following Instance",
+          "description": "Allows user to start following a specific BPD instance",
+          "path": "/rest/bpm/wle/v1/social/instance/<instanceId>/following",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_instance_instanceid_following_post.htm",
+          "options": [
+            {
+              "name": "Instance ID",
+              "description": "The instance ID or process ID, also known as a piid. Can be found through Task API > Task Details.",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "social_instance_delete",
+          "name": "Stop Following Instance",
+          "description": "Allows user to stop following a specific BPD instance",
+          "path": "/rest/bpm/wle/v1/social/instance/<instanceId>/following",
+          "method": [
+            "DELETE"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_instance_instanceid_following_delete.htm",
+          "options": [
+            {
+              "name": "Instance ID",
+              "description": "The instance ID or process ID, also known as a piid. Can be found through Task API > Task Details.",
+              "parameter": "instanceId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "social_task_stream_get",
+          "name": "Retrieve Task Stream",
+          "description": "Retrieves the activity stream for the BPD instance associated with a given task",
+          "path": "/rest/bpm/wle/v1/social/task/<taskId>/stream",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_task_taskid_stream_get.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "Task ID, the unique integer ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Sort Order",
+              "description": "The sort order. Choose 'asc' for ascending, 'desc' for descending. Default is 'desc'.",
+              "parameter": "sort",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Page",
+              "description": "The page of items to return. The default is no paging. Pages start at 1. Using 0 disables paging.",
+              "parameter": "page",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Page Size",
+              "description": "The number of items to return on a page. The default is 10.",
+              "parameter": "pagesize",
+              "type": "string",
+              "required": false
+            },
+            {
+              "name": "Since",
+              "description": "A filter for returning items only available since this date/time. The format is in the form of \"2010-10-10T00:00:00\"",
+              "parameter": "since",
+              "type": "string",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "social_task_comment_post",
+          "name": "Post Threaded Comment",
+          "description": "Allows posting a threaded comment to an existing comment or task",
+          "path": "/rest/bpm/wle/v1/social/task/<taskId>/comment",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_task_taskid_comment_post.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "Task ID, the unique integer ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Comment",
+              "description": "Comment message",
+              "parameter": "message",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "social_task_following_get",
+          "name": "Retrieve Following Task",
+          "description": "Returns true if the current user is following a specific task",
+          "path": "/rest/bpm/wle/v1/social/task/<taskId>/following",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_task_taskid_following_get.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "Task ID, the unique integer ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "social_task_following_post",
+          "name": "Start Following Task",
+          "description": "Allows user to start following a specific task",
+          "path": "/rest/bpm/wle/v1/social/task/<taskId>/following",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_task_taskid_following_post.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "Task ID, the unique integer ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "social_task_following_delete",
+          "name": "Stop Following Task",
+          "description": "Allows user to stop following a specific task",
+          "path": "/rest/bpm/wle/v1/social/task/<taskId>/following",
+          "method": [
+            "DELETE"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_task_taskid_following_delete.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "Task ID, the unique integer ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "social_task_userdata_get",
+          "name": "Retrieve User''s Expert Data",
+          "description": "Retrieves the expert information for a single specific user",
+          "path": "/rest/bpm/wle/v1/social/task/<taskId>/userdata",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_task_taskid_userdata_get.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "Task ID, the unique integer ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "User Name",
+              "description": "User name",
+              "parameter": "username",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "social_experts_get",
+          "name": "Task Experts",
+          "description": "Retrieves experts information for a specific task",
+          "path": "/rest/bpm/wle/v1/social/task/<taskId>/experts",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_social_task_taskid_experts_get.htm",
+          "options": [
+            {
+              "name": "Task ID",
+              "description": "Task ID, the unique integer ID of the task",
+              "parameter": "taskId",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "parts": [
+            "groupDetails"
+          ]
+        },
+        {
+          "id": "social_avatar_get",
+          "name": "Retrieve User Avatar",
+          "description": "Retrieves the avatar image for a specific user",
+          "path": "/rest/bpm/wle/v1/avatar/<user>",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_avatar_usernameorid_get.htm",
+          "options": [
+            {
+              "name": "User Name",
+              "description": "Name of the user",
+              "parameter": "user",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "social_avatar_current_get",
+          "name": "Retrieve Avatar",
+          "description": "Retrieves the avatar image for the current user",
+          "path": "/rest/bpm/wle/v1/avatar/current",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_avatar_usernameorid_get.htm"
+        },
+        {
+          "id": "social_avatar_delete",
+          "name": "Delete Avatar",
+          "description": "Deletes the avatar image for the current user",
+          "path": "/rest/bpm/wle/v1/avatar/current",
+          "method": [
+            "DELETE"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_avatar_usernameorid_delete.htm"
+        },
+        {
+          "id": "social_collaboration_systems_get",
+          "name": "Collaboration System Integration Details",
+          "description": "Retrieves the connection information for any defined collaboration system, such as IBM Sametime or IBM Connections.",
+          "path": "/rest/bpm/wle/v1/social/system/integrations",
+          "method": [
+            "GET"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_avatar_usernameorid_delete.htm"
+        }
+      ]
+    },
+    {
+      "name": "Event Handling API",
+      "description": "Event Handling REST API",
+      "calls": [
+        {
+          "id": "eventHandlingApi_SendEvent",
+          "name": "Send Event",
+          "description": "Use this method to send an ECM event to IBM Business Process Manager.",
+          "path": "/rest/bpm/wle/v1/event/ecm?",
+          "method": [
+            "POST"
+          ],
+          "infoUrl": "/BPMHelp/topic/com.ibm.wbpm.ref.doc/rest/bpmrest/rest_bpm_wle_v1_event_ecm_post.htm",
+          "options": [
+            {
+              "name": "Event Source ID",
+              "description": "Id of the ECM server repository sending the event.",
+              "parameter": "eventSourceId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Object Type ID",
+              "description": "Id of the object type of the object the event occurred on.",
+              "parameter": "objectTypeId",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "Event Type",
+              "description": "Type of the event.",
+              "parameter": "eventType",
+              "type": "list",
+              "values": [
+                "CheckOutCanceled",
+                "CheckedIn",
+                "CheckedOut",
+                "ClassChanged",
+                "ClassifyCompleted",
+                "Created",
+                "Deleted",
+                "Filed",
+                "Frozen",
+                "Locked",
+                "PublishCompleted",
+                "PublishRequested",
+                "SecurityUpdated",
+                "StateChanged",
+                "Unfiled",
+                "Unlocked",
+                "Updated",
+                "VersionDemoted",
+                "VersionPromoted"
+              ],
+              "required": true
+            },
+            {
+              "name": "Object ID",
+              "description": "Id of the object instance the event occurred on.",
+              "parameter": "objectId",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
