@@ -1,6 +1,6 @@
 const { currentState, complete } = require('../../api/task')
 
-class ProcessInstance {
+class Task {
     constructor(taskIdOrRestData) {
         
         // taskId can't be zero, anyway

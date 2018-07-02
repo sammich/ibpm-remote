@@ -18,7 +18,7 @@ describe('process.start', () => {
     
     it('returns body data inside data property', async () => {
         request.__setRequestResponses(null, { statusCode: 200 }, { data: { foo: 'bar' }, data1: 'foo' })
-        await expect(startProcess(1)).resolves.toEqual({ foo: 'bar' })
+        expect(startProcess(1)).resolves.toEqual({ foo: 'bar' })
     })
     
     it('rejects if no BPD ID given', async () => {

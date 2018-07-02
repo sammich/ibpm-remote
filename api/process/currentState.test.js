@@ -17,8 +17,8 @@ describe('process.currentState', () => {
             { statusCode: 200 },
             { data: { foo: 'bar' }, data1: 'foo' }
         )
-        
-        await expect(currentState(1, {})).resolves.toEqual({ foo: 'bar' })
+
+        expect(currentState(1, {})).resolves.toEqual({ foo: 'bar' })
     })
     
     it('rejects if no process ID given', async () => {
