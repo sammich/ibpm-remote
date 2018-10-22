@@ -1,7 +1,8 @@
 require('dotenv').config()
 
 const request = require('request'),
-    queryString = require('query-string')
+    queryString = require('query-string'),
+    userManager = require('./UserManager')
 
 const host = process.env.BPM_SERVER_HOST || 'localhost',
     port = process.env.BPM_SERVER_APP_PORT || '',
@@ -10,12 +11,6 @@ const host = process.env.BPM_SERVER_HOST || 'localhost',
 
     /* istanbul ignore next */
     restUrl = protocol + '://' + host + (port ? ':' + port : '') + rest
-    
-let apiUser = process.env.BPM_ADMIN_USER || 'admin',
-    apiPass = process.env.BPM_ADMIN_PASS || 'admin'
-
-const originalUser = apiUser,
-    originalPass = apiPass
 
 module.exports = {
     get,
@@ -23,23 +18,10 @@ module.exports = {
     put,
     del,
     
-    setUser,
-    restoreUser,
-    
     __parseJson: parseJson,
 }
 
 //
-
-function restoreUser() {
-    apiUser = originalUser
-    apiPass = originalPass
-}
-
-function setUser(username, password) {
-    apiUser = username
-    apiPass = password
-}
 
 function get(path, options = {}) {
     options.method = 'get'
@@ -82,32 +64,22 @@ function del(path, options = {}) {
 function call(path, options = {}) {
     path = (path[0] !== '/') ? '/' + path : path
     
-    const method = options.method.toLowerCase() || 'get',
-        username = options.username || apiUser,
-        password = options.password || apiPass,
+    const currentUser = userManager.current,
+        method = options.method.toLowerCase() || 'get',
         paramMark = path.indexOf('?') > -1 ? '&' : '?',
         parameters = paramMark + queryString.stringify(options.params),
         url = restUrl + path + parameters
-
-    /*options.data && Object.keys(options.data).forEach(key => {
-        if (typeof options.data[key] === 'undefined') {
-            delete options.data[key]
-        }
-    })*/
 
     //console.log('rest', path, options)
 
     return new Promise((resolve, reject) => {
         request[method](url, {
             auth: {
-                user: username,
-                pass: password,
+                user: currentUser.username,
+                pass: currentUser.password,
                 sendImmediately: false
             },
-            form: options.data,
-            /*agentOptions: {
-                secureProtocol: 'TLSv1_client_method'
-            }*/
+            form: options.data
         }, (err, response, body) => {
             if (err) {
                 console.log(err);

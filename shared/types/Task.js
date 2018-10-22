@@ -42,6 +42,8 @@ class Task {
         }
 
         await complete(this.id, { params })
+
+        return this
     }
     
     get id() {

@@ -44,10 +44,12 @@ class ProcessInstance {
         }
 
         this._processRawData()
+        return this
     }
     
     async reload() {
         await this.load()
+        return this
     }
     
     get id() {
@@ -84,6 +86,8 @@ class ProcessInstance {
         } catch (err) {
             console.error('Could not terminate instance', err);
         }
+
+        return this
     }
 
     async delete(force) {
@@ -96,6 +100,8 @@ class ProcessInstance {
         } catch (err) {
             console.error('Could not delete instance', err);
         }
+
+        return this
     }
 
     getOpenTasks() {
