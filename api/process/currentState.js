@@ -40,6 +40,6 @@ async function exec(instanceId, options = {}, parts, returnRaw) {
     if (!result || !result.data) {
         throw new Error('No data received / Invalid instance')
     }
-    
-    return returnRaw ? result.data : new ProcessInstance(result.data)
+
+    return returnRaw || !parts ? result.data : new ProcessInstance(result.data)
 }

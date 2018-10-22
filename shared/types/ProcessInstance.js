@@ -1,7 +1,8 @@
-const { deleteProcess } = require('../../api/process'),
-    Task = require('./Task'),
+const Task = require('./Task'),
     { waitCheck } = require('../../utils'),
-    currentState = require('../../api/process/currentState')
+    currentState = require('../../api/process/currentState'),
+    deleteInstance = require('../../api/process/delete'),
+    terminateInstance = require('../../api/process/terminate')
 
 class ProcessInstance {
     constructor(processIdOrRestData) {
@@ -35,8 +36,13 @@ class ProcessInstance {
         })
     }
     
-    async load() {
-        this._rawData = await currentState(this.id, undefined, true, true)
+    async load(data) {
+        if (!data) {
+            this._rawData = await currentState(this.id, undefined, true, true)
+        } else {
+            this._rawData = data
+        }
+
         this._processRawData()
     }
     
@@ -64,12 +70,32 @@ class ProcessInstance {
         return this._rawData.state === 'STATE_FAILED'
     }
 
-    get isFinished() {
-        return this._rawData.executionState === 'Completed'
+    get isActive() {
+        return this._rawData.state === 'STATE_RUNNING'
     }
 
-    remove() {
-        deleteProcess(this.id, undefined, true)
+    get isFinished() {
+        return this._rawData.state === 'STATE_FINISHED'
+    }
+
+    async terminate() {
+        try {
+            await terminateInstance(this.id, undefined, true)
+        } catch (err) {
+            console.error('Could not terminate instance', err);
+        }
+    }
+
+    async delete(force) {
+        if (!this.isFinished && force) {
+            await this.terminate()
+        }
+
+        try {
+            await deleteInstance(this.id, undefined, true)
+        } catch (err) {
+            console.error('Could not delete instance', err);
+        }
     }
 
     getOpenTasks() {

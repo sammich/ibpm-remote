@@ -5,7 +5,7 @@ const post = require('../../utils/rest').post,
 module.exports = exec
 
 /**
- * Deletes a BPD instance
+ * Terminates a BPD instance
  *
  * @param {string} instanceId
  * @returns undefined
@@ -15,13 +15,13 @@ async function exec(instanceId) {
         throw new Error('Instance ID must be provided')
     }
 
-    const result = await post(`/process/${instanceId}?action=delete`, {
+    const result = await post(`/process/${instanceId}?action=terminate`, {
         params: {
             parts: 'none'
         }
     })
     
     if (!result || !result.data) {
-        throw new Error('No data received from deleting instance')
+        throw new Error('No data received from terminate instance')
     }
 }
