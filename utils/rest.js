@@ -49,7 +49,7 @@ function get(path, options = {}) {
 
 function post(path, options = {}) {
     options.method = 'post'
-    
+
     return call(path, options)
 }
 
@@ -88,7 +88,15 @@ function call(path, options = {}) {
         paramMark = path.indexOf('?') > -1 ? '&' : '?',
         parameters = paramMark + queryString.stringify(options.params),
         url = restUrl + path + parameters
-    
+
+    /*options.data && Object.keys(options.data).forEach(key => {
+        if (typeof options.data[key] === 'undefined') {
+            delete options.data[key]
+        }
+    })*/
+
+    //console.log('rest', path, options)
+
     return new Promise((resolve, reject) => {
         request[method](url, {
             auth: {
@@ -96,20 +104,24 @@ function call(path, options = {}) {
                 pass: password,
                 sendImmediately: false
             },
-            form: options.data
+            form: options.data,
+            /*agentOptions: {
+                secureProtocol: 'TLSv1_client_method'
+            }*/
         }, (err, response, body) => {
             if (err) {
+                console.log(err);
                 return reject(err)
             }
             
             //console.log('status', response && response.statusCode)
             //console.log('body', body)
-            
+
             if (response && response.statusCode) {
                 if (response.statusCode >= 400 && response.statusCode < 600) {
-    
+
                     // IBM BPM responds with a JSON error structure
-                    return reject(parseJson(response, body))
+                    return reject(parseJson(response, body) || response.statusMessage)
                 }
             }
             
@@ -125,7 +137,9 @@ function parseJson(response, body) {
     if (response.headers['content-type'] === 'application/json') {
         try {
             return JSON.parse(body)
-        } catch (err) {}
+        } catch (err) {
+            throw err
+        }
     }
     
     return body

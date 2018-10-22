@@ -1,5 +1,7 @@
-const { deleteProcess, currentState } = require('../../api/process'),
-    Task = require('./Task')
+const { deleteProcess } = require('../../api/process'),
+    Task = require('./Task'),
+    { waitCheck } = require('../../utils'),
+    currentState = require('../../api/process/currentState')
 
 class ProcessInstance {
     constructor(processIdOrRestData) {
@@ -8,13 +10,13 @@ class ProcessInstance {
         if (!processIdOrRestData) {
             throw new Error('No processId or data provided')
         }
-        
-        if (typeof instanceId === 'number') {
+
+        if (typeof processIdOrRestData === 'number') {
             this._rawData = {
                 piid: processIdOrRestData
             }
             // module user needs to call `load()` after this call path
-        } else if (typeof instanceId === 'object') {
+        } else if (typeof processIdOrRestData === 'object') {
             this._rawData = processIdOrRestData
             this._processRawData()
         } else {
@@ -58,38 +60,58 @@ class ProcessInstance {
         return this._rawData.variables
     }
     
-    get failed() {
+    get isFailed() {
         return this._rawData.state === 'STATE_FAILED'
     }
-    
-    get tasjs() {
-        return this._rawData.tasks
-    }
-    
-    get finished() {
+
+    get isFinished() {
         return this._rawData.executionState === 'Completed'
     }
-    
+
     remove() {
         deleteProcess(this.id, undefined, true)
     }
-    
-    getTask(nameFilter) {
-        if (!nameFilter) {
-            throw new Error('String or RegExp is required')
-        }
-        
-        const strMatch = typeof nameFilter === 'string'
-        
-        return this.tasks.find(task => {
-            return strMatch ? nameFilter === task.name : nameFilter.test(task.name)
+
+    getOpenTasks() {
+        return this._rawData.tasks.filter(task => {
+            return task._rawData.status !== 'Closed'
         })
     }
-    
-    getTasks(nameFilter) {
+
+    /**
+     *
+     * @param taskNameFilter - regex or string - same semantics as `getTasksByName`
+     * @returns {Promise<void>}
+     */
+    async waitForTask(taskNameFilter) {
+        return await waitCheck(async () => {
+            await this.reload()
+
+            const tasks = this.getTasksByName(taskNameFilter)
+
+            if (tasks.length) {
+                return tasks
+            }
+        }, 2000, {
+            async: true,
+            tailCall: true
+        })
+    }
+
+    /**
+     *
+     * @param {RegExp|string} nameFilter - Return task names matching the regex object or a string
+     *                                     (case insensitive)
+     * @returns {Task[]} - any matching tasks
+     */
+    getTasksByName(nameFilter) {
         if (!nameFilter) return this.tasks
         
         const strMatch = typeof nameFilter === 'string'
+
+        if (!strMatch && !(nameFilter instanceof RegExp)) {
+            throw new Error('input must be string or regex')
+        }
         
         return this.tasks.filter(task => {
             return strMatch ? nameFilter === task.name : nameFilter.test(task.name)
@@ -99,9 +121,7 @@ class ProcessInstance {
 
 module.exports = ProcessInstance
 
-/*
-
-{
+/* {
     creationTime: '2017-07-03T12:17:02Z',
     description: '',
     richDescription: '',

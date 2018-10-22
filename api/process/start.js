@@ -28,7 +28,7 @@ async function exec(bpdId, options = {}, parts, returnRaw) {
     if (!bpdId) {
         throw new Error('BPD ID must be provided')
     }
-    
+
     const result = await post(path, {
         params: {
             parts: parts === true ? 'all' : joinParts(parts, '|', 'none')
@@ -47,5 +47,5 @@ async function exec(bpdId, options = {}, parts, returnRaw) {
         throw new Error('No data received from starting instance')
     }
     
-    return returnRaw ? result.data : new ProcessInstance(result.data)
+    return returnRaw || !parts ? result.data : new ProcessInstance(result.data)
 }

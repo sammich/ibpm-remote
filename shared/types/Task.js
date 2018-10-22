@@ -1,4 +1,4 @@
-const { currentState, complete } = require('../../api/task')
+const { currentState, complete, assignToMe } = require('../../api/task')
 
 class Task {
     constructor(taskIdOrRestData) {
@@ -8,12 +8,12 @@ class Task {
             throw new Error('No taskId or data provided')
         }
         
-        if (typeof instanceId === 'number') {
+        if (typeof taskIdOrRestData === 'number') {
             this._rawData = {
                 tkiid: taskIdOrRestData
             }
             // module user needs to call `load()` after this call path
-        } else if (typeof instanceId === 'object') {
+        } else if (typeof taskIdOrRestData === 'object') {
             this._rawData = taskIdOrRestData
             this._processRawData()
         } else {
@@ -36,9 +36,12 @@ class Task {
         await this.load()
     }
     
-    async complete(params) {
+    async complete(params, assignToMeFirst) {
+        if (assignToMeFirst) {
+            await assignToMe(this.id)
+        }
+
         await complete(this.id, { params })
-        await this.load()
     }
     
     get id() {
@@ -48,7 +51,11 @@ class Task {
     get name() {
         return this._rawData.name
     }
-    
+
+    get assignedTo() {
+        return this._rawData.assignedTo
+    }
+
     get assignedToDisplayName() {
         return this._rawData.assignedToDisplayName
     }

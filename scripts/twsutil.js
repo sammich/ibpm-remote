@@ -1,3 +1,14 @@
+/*
+twsutil.exec({
+    columns: [
+        twsutil.col(TWSearchColumn.Types.ProcessInstance, TWSearchColumn.ProcessInstanceColumns.DueDate)
+    ]
+}, function (row) {
+    row[0]
+})
+
+ */
+
 twsutil = (function () {
     return {
         exec: exec,
@@ -11,8 +22,8 @@ twsutil = (function () {
     /**
      * Convenience column definition builder.
      *
-     * @param {TWSearchColumn} col - what column to condition with
-     * @param {TWSearchCondition.Operations} operation
+     * @param {TWSearchType} type - what column to
+     * @param {TWSearchColumn} name - the column
      * @returns {TWSearchColumn}
      */
     function col(type, name) {
