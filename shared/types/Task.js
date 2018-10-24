@@ -1,8 +1,9 @@
 const { currentState, complete, assignToMe } = require('../../api/task')
 
 class Task {
-    constructor(taskIdOrRestData) {
-        
+    constructor(taskIdOrRestData, processInstance) {
+        this.processInstance = processInstance
+
         // taskId can't be zero, anyway
         if (!taskIdOrRestData) {
             throw new Error('No taskId or data provided')

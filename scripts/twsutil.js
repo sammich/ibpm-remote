@@ -1,12 +1,21 @@
-/*
-twsutil.exec({
-    columns: [
-        twsutil.col(TWSearchColumn.Types.ProcessInstance, TWSearchColumn.ProcessInstanceColumns.DueDate)
-    ]
-}, function (row) {
-    row[0]
-})
+/**
+ Convenience wrapper for the TWSearch API.
 
+ To use this, add this as a server file to a toolkit in your BPM system.
+
+  - `twsutil` will be added to the global scope.
+  - Any business data columns will be after any `options.columns` columns
+
+ Basic example:
+
+    twsutil.exec({
+        columns: [
+            twsutil.col(TWSearchColumn.Types.ProcessInstance, TWSearchColumn.ProcessInstanceColumns.DueDate)
+        ]
+    }, function (row) {
+        row[0] // first column
+    })
+ *
  */
 
 twsutil = (function () {
